@@ -1,7 +1,8 @@
+import node from '@sveltejs/adapter-node';
+import vercel from '@sveltejs/adapter-vercel';
 import preprocess from 'svelte-preprocess';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
-import node from '@sveltejs/adapter-node';
 
 const src = resolve('./src');
 const pkg = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'));
@@ -13,6 +14,7 @@ const config = {
 	preprocess: preprocess(),
 	kit: {
 		adapter: node(),
+		adapter: vercel(),
 		target: '#svelte',
 		vite: {
 			ssr: {
