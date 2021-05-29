@@ -3,11 +3,17 @@ import Navbar from "$components/Navbar";
 
 </script>
 <header>
-  <h1>Road Trip</h1>
+  <h1><a href="/">Road Trip</a></h1>
   <Navbar />
 </header>
 
 <style>
+  h1 a {
+    color: inherit;
+  }
+  h1 a:hover {
+    text-decoration: none;
+  }
   header {
     display: flex;
     align-content: center;

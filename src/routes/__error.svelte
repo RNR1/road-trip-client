@@ -9,7 +9,8 @@
 </script>
 
 <script>
+	import Modal from '$components/Modal';
 	export let title;
 </script>
 
-<h1>{title}</h1>
+<Modal title="Error">{title}</Modal>

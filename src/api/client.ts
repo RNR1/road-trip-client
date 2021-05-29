@@ -11,9 +11,7 @@ export async function get<T>({
 	return ctxFetch(`${baseURL}${endpoint}`, {
 		headers: { ...defaultHeaders, ...headers },
 		method
-	})
-		.then(handleError)
-		.then((response) => response.json());
+	}).then(handleResponse);
 }
 
 export async function post<T, R extends Record<string, unknown>>({
@@ -26,9 +24,7 @@ export async function post<T, R extends Record<string, unknown>>({
 		headers: { ...defaultHeaders, ...headers },
 		body: JSON.stringify(body),
 		method
-	})
-		.then(handleError)
-		.then((response) => response.json());
+	}).then(handleResponse, () => {});
 }
 export async function patch<T, R extends Record<string, unknown>>({
 	endpoint,
@@ -40,10 +36,7 @@ export async function patch<T, R extends Record<string, unknown>>({
 		headers: { ...defaultHeaders, ...headers },
 		body: JSON.stringify(body),
 		method
-	})
-		.then(handleError)
-		.then((response) => response.json())
-		.catch((error) => console.error(error));
+	}).then(handleResponse);
 }
 export async function remove<T>({
 	endpoint,
@@ -55,14 +48,13 @@ export async function remove<T>({
 		headers: { ...defaultHeaders, ...headers },
 		body: JSON.stringify(body),
 		method
-	})
-		.then(handleError)
-		.then((response) => response.json());
+	}).then(handleResponse);
 }
 
 export default { get, post, patch, delete: remove };
 
-function handleError(response: Response, message = 'Failed to fetch resource') {
-	if (!response.ok) throw Error(message);
-	return response;
+async function handleResponse(response: Response) {
+	const data = await response.json();
+	if (!response.ok) throw data;
+	return data;
 }

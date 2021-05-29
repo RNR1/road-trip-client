@@ -1,21 +1,72 @@
 <script lang="ts">
-  import { Auth } from "$api/methods";
-  let email = '';
-  let password = '';
-  const onSubmit: svelte.JSX.FormEventHandler<HTMLFormElement> = (e) => {
-    Auth.login({ email, password }).then(res => console.log(res));
-  }
+	import { goto } from '$app/navigation';
+	import { Auth } from '$api/methods';
+	import { FormControl } from '$components/forms';
+	import Button from '$components/Button';
+	import Card from '$components/Card';
+	import Notification from '$components/Notification';
+	import { configKey } from '$config/constants';
+	import { isEmpty, isValidEmail } from '$utils/validation';
+
+	let email = '';
+	let password = '';
+
+	let loading = false;
+	let error = '';
+
+	$: isEmailValid = !isEmpty(email) && isValidEmail(email);
+	$: isPasswordValid = !isEmpty(password) && password?.length > 5;
+	$: isFormValid = isEmailValid && isPasswordValid;
+
+	const onSubmit: svelte.JSX.FormEventHandler<HTMLFormElement> = (e) => {
+		error = '';
+		loading = true;
+		Auth.login({ email, password })
+			.then(({ message, ...config }) => {
+				loading = false;
+				localStorage.setItem(configKey, JSON.stringify(config));
+				goto('/');
+			})
+			.catch((err: { message: string }) => {
+				loading = false;
+				error = err.message;
+			});
+	};
 </script>
 
-<h2>Login</h2>
-<form on:submit|preventDefault={onSubmit}>
-  <div>
-    <label for="email">Email</label>
-    <input type="email" name="email" bind:value={email} />
-  </div>
-  <div>
-    <label for="password">Password</label>
-    <input type="password" name="password" bind:value={password} />
-  </div>
-  <button type="submit">Login</button>
-</form>
+<svelte:head>
+	<title>Road Trip • Sign up</title>
+</svelte:head>
+<Card>
+	<form on:submit|preventDefault={onSubmit}>
+		<h2>Login</h2>
+		<FormControl
+			valid={isEmailValid}
+			label="Email"
+			type="email"
+			name="email"
+			placeholder="someone@example.com"
+			bind:value={email}
+			errorMessage="Wait! Looks like you didn't enter a valid email address. We need that to get going."
+			required
+		/>
+		<FormControl
+			valid={isPasswordValid}
+			label="Password"
+			type="password"
+			name="password"
+			placeholder="Minimum 5 characters"
+			bind:value={password}
+			errorMessage="We can't get on the road until you enter your password!"
+			required
+		/>
+		<Button {loading} disabled={!isFormValid} type="submit">Login</Button>
+	</form>
+</Card>
+<Notification open={Boolean(error)} message={error} severity="error" />
+
+<style>
+	form {
+		width: 100%;
+	}
+</style>
