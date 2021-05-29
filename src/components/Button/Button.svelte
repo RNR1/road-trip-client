@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Loader from '../Loader/Loader.svelte';
-
 	export let type: string = 'button';
 	export let href: string | null = null;
 	export let variant: 'success' | 'outline' | 'success outline' | '' = '';

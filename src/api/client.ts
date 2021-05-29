@@ -24,7 +24,7 @@ export async function post<T, R extends Record<string, unknown>>({
 		headers: { ...defaultHeaders, ...headers },
 		body: JSON.stringify(body),
 		method
-	}).then(handleResponse, () => {});
+	}).then(handleResponse);
 }
 export async function patch<T, R extends Record<string, unknown>>({
 	endpoint,
