@@ -63,7 +63,7 @@
 		<Button {loading} disabled={!isFormValid} type="submit">Login</Button>
 	</form>
 </Card>
-<Notification open={Boolean(error)} message={error} severity="error" />
+<Notification open={Boolean(error)} bind:message={error} severity="error" />
 
 <style>
 	form {
