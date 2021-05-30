@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Status } from '$app/typings/common';
 	import { onDestroy } from 'svelte';
+	import { portal } from '$utils/portal';
 
 	export let open: boolean = true;
 	export let severity: Status | null = null;
@@ -18,28 +19,33 @@
 	onDestroy(() => clearTimeout(timeout));
 </script>
 
-<dialog {open} class={severity}>
-	<span class="material-icons">{severity}</span>
-	{message}
-</dialog>
+<div use:portal={'#overlay'}>
+	<figure class:open class={`${severity}`}>
+		<span class="material-icons">{severity}</span>
+		{message}
+	</figure>
+</div>
 
 <style>
-	dialog {
+	figure {
 		bottom: 1rem;
 		transition: all 0.3s;
 		border-radius: 8px;
-		transform: translateY(0);
+		transform: translateY(200%);
 		display: flex;
 		align-items: center;
 		margin: 0 1rem;
+		position: fixed;
+		margin: 0 1rem;
+		padding: 1rem;
 	}
-	dialog:not([open]) {
+	.open {
 		display: flex;
-		transform: translateY(200%);
+		transform: translateY(0);
 	}
 
 	@media (min-width: 500px) {
-		dialog {
+		figure.open {
 			margin-left: 1rem;
 		}
 	}
