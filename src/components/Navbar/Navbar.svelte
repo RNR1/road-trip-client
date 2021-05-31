@@ -7,12 +7,12 @@
 	<nav on:click>
 		<a href="/login">
 			<span class="material-icons">login</span>
-			<span>Login</span>
+			<span class="label">Login</span>
 		</a>
 		<a href="/signup">
 			<span class="material-icons">login</span>
-			Sign up</a
-		>
+			<span class="label">Sign up</span>
+		</a>
 	</nav>
 </div>
 
@@ -24,6 +24,7 @@
 		right: 10px;
 		top: 55px;
 		z-index: 100;
+		min-width: max-content;
 	}
 
 	nav {
@@ -34,8 +35,9 @@
 	a {
 		color: inherit;
 		display: flex;
-		padding: 0.5rem 2rem;
+		padding: 1rem 0.5rem;
 		align-items: center;
+		justify-content: space-around;
 		height: 100%;
 		width: 100%;
 		border-radius: inherit;
@@ -47,7 +49,12 @@
 		background: #ccc;
 	}
 
+	.label {
+		width: 100%;
+		padding: 0 2rem;
+	}
+
 	.material-icons {
-		margin-right: 5px;
+		margin-right: 10px;
 	}
 </style>
