@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
+
+	export let transparent: boolean = false;
 </script>
 
-<div transition:fade={{ duration: 200 }} on:click />
+<div class:transparent transition:fade={{ duration: 200 }} on:click />
 
 <style>
 	div {
@@ -13,5 +15,9 @@
 		height: 100vh;
 		background: rgba(0, 0, 0, 0.75);
 		z-index: 10;
+	}
+
+	.transparent {
+		background-color: transparent;
 	}
 </style>

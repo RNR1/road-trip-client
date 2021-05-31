@@ -20,7 +20,7 @@
 </script>
 
 <div use:portal={'#overlay'}>
-	<figure class:open class={`${severity}`}>
+	<figure class:open class={severity}>
 		<span class="material-icons">{severity}</span>
 		{message}
 	</figure>
