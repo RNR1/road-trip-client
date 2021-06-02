@@ -7,7 +7,11 @@
 	import { isEmpty, isValidEmail } from '$utils/validation';
 	import { goto } from '$app/navigation';
 	import { configKey } from '$config/constants';
+	import { readFile } from '$utils/string';
 
+	const SIZE_LIMIT = 1048576;
+
+	let avatar: string = '';
 	let firstName = '';
 	let lastName = '';
 	let email = '';
@@ -25,7 +29,13 @@
 	const onSubmit: svelte.JSX.FormEventHandler<HTMLFormElement> = (e) => {
 		error = '';
 		loading = true;
-		const body = { firstName, lastName, email, password };
+		const body = {
+			firstName,
+			lastName,
+			email,
+			password,
+			avatar: !isEmpty(avatar) ? avatar : undefined
+		};
 		Auth.signup(body)
 			.then(({ message, ...config }) => {
 				loading = false;
@@ -37,6 +47,16 @@
 				error = res.message;
 			});
 	};
+
+	const onSelectFile: svelte.JSX.FormEventHandler<HTMLInputElement> = async (e) => {
+		const { files } = e.currentTarget;
+		if (!files.length) return;
+		if (files[0]?.size > SIZE_LIMIT) {
+			error = 'This file is not supported, please upload a smaller file.';
+		}
+		const { data } = await readFile(files[0]);
+		avatar = data as string;
+	};
 </script>
 
 <svelte:head>
@@ -45,6 +65,7 @@
 <Card>
 	<form on:submit|preventDefault={onSubmit}>
 		<h2>Sign up</h2>
+		<input type="file" accept="image/*" on:change={onSelectFile} />
 		<FormControl
 			valid={isFirstNameValid}
 			label="First name"

@@ -4,6 +4,7 @@ declare interface LoginPayload {
 }
 
 declare interface SignupPayload {
+	avatar?: string;
 	firstName: string;
 	lastName: string;
 	email: string;
@@ -14,6 +15,10 @@ declare type AuthResponse = {
 	message: string;
 	token?: string;
 	email?: string;
+	avatar: string;
+	id: string;
+	firstName: string;
+	lastName: string;
 };
 
 export type { LoginPayload, SignupPayload, AuthResponse };
