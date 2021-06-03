@@ -25,6 +25,7 @@ const config = {
 					$app: `${src}`,
 					$api: `${src}/api`,
 					$components: `${src}/components`,
+					$data: `${src}/data`,
 					$config: `${src}/config`,
 					$routes: `${src}/routes`,
 					$utils: `${src}/utils`,

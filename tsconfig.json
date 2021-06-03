@@ -28,6 +28,7 @@
 			"$api/*": ["./src/api/*"],
 			"$components/*": ["./src/components/*"],
 			"$config": ["./src/config/*"],
+			"$data/*": ["./src/data/*"],
 			"$utils/*": ["./src/utils/*"],
 			"$routes": ["./src/routes"],
 			"$typings/*": ["./src/typings/*"]

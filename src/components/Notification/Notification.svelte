@@ -59,4 +59,10 @@
 		color: white;
 		border-color: transparent;
 	}
+
+	.success {
+		background: greenyellow;
+		color: white;
+		border-color: transparent;
+	}
 </style>

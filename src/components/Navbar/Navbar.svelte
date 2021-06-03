@@ -1,18 +1,41 @@
-<script>
+<script lang="ts">
 	import Backdrop from '../Backdrop/Backdrop.svelte';
+	import auth from '$data/auth';
+	import { onDestroy, onMount } from 'svelte';
+	import type { AuthResponse } from '$typings/auth';
+	import type { Unsubscriber } from 'svelte/store';
+	let session: AuthResponse;
+	let unsubscribe: Unsubscriber;
+
+	onMount(() => {
+		unsubscribe = auth.subscribe((authSession) => {
+			session = authSession as AuthResponse;
+		});
+	});
+
+	onDestroy(() => unsubscribe());
+
+	$: isAuthenticated = Boolean(session?.token);
 </script>
 
 <Backdrop on:click transparent />
 <div id="modal">
 	<nav on:click>
-		<a href="/login">
-			<span class="material-icons">login</span>
-			<span class="label">Login</span>
-		</a>
-		<a href="/signup">
-			<span class="material-icons">login</span>
-			<span class="label">Sign up</span>
-		</a>
+		{#if isAuthenticated}
+			<a href="/logout">
+				<span class="material-icons">logout</span>
+				<span class="label">Logout</span>
+			</a>
+		{:else}
+			<a href="/login">
+				<span class="material-icons">login</span>
+				<span class="label">Login</span>
+			</a>
+			<a href="/signup">
+				<span class="material-icons">login</span>
+				<span class="label">Sign up</span>
+			</a>
+		{/if}
 	</nav>
 </div>
 

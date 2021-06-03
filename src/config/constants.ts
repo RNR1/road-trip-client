@@ -1,1 +1,1 @@
-export const configKey = 'road-trip:config';
+export const configKey = 'road-trip:token';

@@ -1,35 +1,39 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Auth } from '$api/methods';
+	import auth from '$data/auth';
 	import { FormControl } from '$components/forms';
 	import Button from '$components/Button';
 	import Card from '$components/Card';
 	import Notification from '$components/Notification';
-	import { configKey } from '$config/constants';
 	import { isEmpty, isValidEmail } from '$utils/validation';
+	import type { Status } from '$app/typings/common';
 
 	let email = '';
 	let password = '';
 
 	let loading = false;
-	let error = '';
+	let message = '';
+	let severity: Status;
 
 	$: isEmailValid = !isEmpty(email) && isValidEmail(email);
 	$: isPasswordValid = !isEmpty(password) && password?.length > 5;
 	$: isFormValid = isEmailValid && isPasswordValid;
 
 	const onSubmit: svelte.JSX.FormEventHandler<HTMLFormElement> = (e) => {
-		error = '';
+		message = '';
 		loading = true;
-		Auth.login({ email, password })
-			.then(({ message, ...config }) => {
+		auth
+			.login({ email, password })
+			.then(({ message }) => {
 				loading = false;
-				localStorage.setItem(configKey, JSON.stringify(config));
+				message = message;
+				severity = 'success';
 				goto('/');
 			})
 			.catch((err: { message: string }) => {
 				loading = false;
-				error = err.message;
+				message = err.message;
+				severity = 'error';
 			});
 	};
 </script>
@@ -63,7 +67,7 @@
 		<Button {loading} disabled={!isFormValid} type="submit">Login</Button>
 	</form>
 </Card>
-<Notification open={Boolean(error)} bind:message={error} severity="error" />
+<Notification open={Boolean(message)} bind:message bind:severity />
 
 <style>
 	form {

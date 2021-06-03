@@ -1,4 +1,5 @@
 import client from '$api/client';
+import { configKey } from '$config/constants';
 import type { AuthResponse, LoginPayload, SignupPayload } from '$typings/auth';
 
 export const Auth = {
@@ -8,5 +9,11 @@ export const Auth = {
 			body
 		}),
 	signup: (body: SignupPayload) =>
-		client.post<SignupPayload, AuthResponse>({ endpoint: '/auth/signup', body })
+		client.post<SignupPayload, AuthResponse>({ endpoint: '/auth/signup', body }),
+	verifyUser: (context: { fetch: typeof fetch }, token: string) =>
+		client.get<AuthResponse>({
+			context,
+			endpoint: '/auth/verify',
+			headers: token ? { Authorization: `Bearer ${token}` } : {}
+		})
 };

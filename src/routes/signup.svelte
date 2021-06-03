@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Auth } from '$api/methods';
-	import { FormControl } from '$components/forms';
+	import { FormControl, AvatarInput } from '$components/forms';
 	import Button from '$components/Button/Button.svelte';
 	import Card from '$components/Card';
 	import Notification from '$components/Notification';
@@ -9,7 +9,7 @@
 	import { configKey } from '$config/constants';
 	import { readFile } from '$utils/string';
 
-	const SIZE_LIMIT = 1048576;
+	const SIZE_LIMIT = 1048576 * 2;
 
 	let avatar: string = '';
 	let firstName = '';
@@ -52,8 +52,10 @@
 		const { files } = e.currentTarget;
 		if (!files.length) return;
 		if (files[0]?.size > SIZE_LIMIT) {
-			error = 'This file is not supported, please upload a smaller file.';
+			error = 'This file is not supported, please upload a smaller file(up to 2MB).';
+			return;
 		}
+
 		const { data } = await readFile(files[0]);
 		avatar = data as string;
 	};
@@ -65,7 +67,7 @@
 <Card>
 	<form on:submit|preventDefault={onSubmit}>
 		<h2>Sign up</h2>
-		<input type="file" accept="image/*" on:change={onSelectFile} />
+		<AvatarInput bind:src={avatar} on:change={onSelectFile} />
 		<FormControl
 			valid={isFirstNameValid}
 			label="First name"
