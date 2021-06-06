@@ -12,6 +12,7 @@
 		if (open) {
 			timeout = setTimeout(() => {
 				message = '';
+				severity = null;
 			}, 4000);
 		} else clearTimeout(timeout);
 	}
@@ -21,7 +22,7 @@
 
 <div use:portal={'#overlay'}>
 	<figure class:open class={severity}>
-		<span class="material-icons">{severity}</span>
+		<span class="material-icons">{severity !== 'success' ? severity : 'check_circle'}</span>
 		{message}
 	</figure>
 </div>
@@ -61,8 +62,13 @@
 	}
 
 	.success {
-		background: greenyellow;
+		background: green;
 		color: white;
 		border-color: transparent;
+	}
+
+	.info {
+		background: blue;
+		color: white;
 	}
 </style>

@@ -4,19 +4,11 @@
 	export let label: string;
 	export let name: string;
 	export let value: string;
-	export let type: string = 'text';
 	export let placeholder: string = '';
-	export let variant: 'input' | 'textarea' = 'input';
 	export let valid: boolean = true;
 	export let errorMessage = '';
 	export let required = false;
 	let touched: boolean = false;
-
-	const onInput = (e) => {
-		e.target.type = type;
-	};
-
-	$: isTextArea = variant === 'textarea';
 
 	function setTouched() {
 		touched = true;
@@ -30,25 +22,14 @@
 			<sup>*</sup>
 		{/if}
 	</label>
-	{#if isTextArea}
-		<textarea
-			class:invalid={!valid && touched}
-			rows={3}
-			bind:value
-			{placeholder}
-			{name}
-			on:blur={setTouched}
-		/>
-	{:else}
-		<input
-			class:invalid={!valid && touched}
-			bind:value
-			{name}
-			{placeholder}
-			on:input={onInput}
-			on:blur={setTouched}
-		/>
-	{/if}
+	<input
+		class:invalid={!valid && touched}
+		bind:value
+		{name}
+		{placeholder}
+		type="date"
+		on:blur={setTouched}
+	/>
 	<ErrorMessage>
 		{#if errorMessage && !valid && touched}
 			{errorMessage}
@@ -57,8 +38,7 @@
 </div>
 
 <style>
-	input,
-	textarea {
+	input {
 		display: block;
 		width: 100%;
 		font: inherit;
@@ -66,12 +46,11 @@
 		border-bottom: 2px solid #ccc;
 		border-radius: 10px;
 		background: white;
-		padding: 0.5rem 0.25rem;
+		padding: 0.3rem 0.25rem;
 		transition: border-color 0.1s ease-out;
 	}
 
-	input:focus,
-	textarea:focus {
+	input:focus {
 		border-color: #e40763;
 		outline: none;
 	}

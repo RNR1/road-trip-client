@@ -7,6 +7,7 @@
 	import Notification from '$components/Notification';
 	import { isEmpty, isValidEmail } from '$utils/validation';
 	import type { Status } from '$app/typings/common';
+	import { session } from '$app/stores';
 
 	let email = '';
 	let password = '';
@@ -24,9 +25,10 @@
 		loading = true;
 		auth
 			.login({ email, password })
-			.then(({ message }) => {
+			.then(({ message, ...user }) => {
 				loading = false;
 				message = message;
+				$session.user = user;
 				severity = 'success';
 				goto('/');
 			})

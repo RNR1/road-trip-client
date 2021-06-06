@@ -22,6 +22,10 @@
 <div id="modal">
 	<nav on:click>
 		{#if isAuthenticated}
+			<a href="/book-a-room">
+				<span class="material-icons">hotel</span>
+				<span class="label">Book a room</span>
+			</a>
 			<a href="/logout">
 				<span class="material-icons">logout</span>
 				<span class="label">Logout</span>

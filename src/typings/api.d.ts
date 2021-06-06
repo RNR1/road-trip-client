@@ -6,6 +6,7 @@ declare interface HTTPClientConfig<T> {
 	method?: Method;
 	headers?: Record<string, string>;
 	body?: T;
+	params?: Record<string, string>;
 }
 
 declare type BasicResponse = {

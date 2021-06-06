@@ -1,3 +1,4 @@
+import { isEmpty } from '$app/utils/validation';
 import type { HTTPClientConfig } from '$typings/api';
 import { baseURL, defaultHeaders } from './constants';
 
@@ -5,13 +6,17 @@ export async function get<T>({
 	context,
 	endpoint,
 	headers = {},
-	method = 'GET'
+	method = 'GET',
+	params
 }: HTTPClientConfig<T>): Promise<T> {
 	const ctxFetch = context?.fetch ?? fetch;
-	return ctxFetch(`${baseURL}${endpoint}`, {
-		headers: { ...defaultHeaders, ...headers },
-		method
-	}).then(handleResponse);
+	return ctxFetch(
+		`${baseURL}${endpoint}${params ? `?${new URLSearchParams(params).toString()}` : ''}`,
+		{
+			headers: { ...defaultHeaders, ...headers },
+			method
+		}
+	).then(handleResponse);
 }
 
 export async function post<T, R extends Record<string, unknown>>({

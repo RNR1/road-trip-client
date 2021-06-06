@@ -25,8 +25,11 @@ function createSession() {
 			Auth.verifyUser(context, localStorage.getItem(configKey))
 				.then((response) => {
 					session.set({ ...response, token: localStorage.getItem(configKey) });
+					return response;
 				})
-				.catch(() => this.clear())
+				.catch(() => {
+					session.set({});
+				})
 	};
 }
 

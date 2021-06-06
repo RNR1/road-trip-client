@@ -5,10 +5,10 @@
 
 	export const load: Load = async ({ fetch }) => {
 		try {
-			if (browser) auth.verify({ fetch }).catch(() => auth.clear());
+			if (browser) auth.verify({ fetch });
 			return { status: 200 };
 		} catch (error) {
-			return { status: 401, redirect: '/logout' };
+			return { status: 302, redirect: '/logout' };
 		}
 	};
 </script>
