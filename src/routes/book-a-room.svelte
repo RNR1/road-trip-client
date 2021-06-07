@@ -8,6 +8,7 @@
 	import type { Reservation } from '$typings/reservations';
 	import type { Status } from '$typings/common';
 	import { isEmpty } from '$utils/validation';
+	import { APP_NAME } from '$config/constants';
 
 	let location: string = '';
 	let checkIn: string = '';
@@ -46,7 +47,7 @@
 </script>
 
 <svelte:head>
-	<title>Road Trip • Book a Room</title>
+	<title>{APP_NAME} • Book a Room</title>
 </svelte:head>
 <Card>
 	<form on:submit|preventDefault={onSubmit}>
@@ -62,7 +63,7 @@
 			<DatePicker label="Check in" name="in" bind:value={checkIn} placeholder="Check in" />
 			<DatePicker label="Check out" name="out" bind:value={checkOut} placeholder="Check out" />
 			<FormControl
-				label="Guests"
+				label="Adult Guests"
 				type="number"
 				name="for"
 				bind:value={guests}

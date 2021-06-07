@@ -28,7 +28,7 @@
 </script>
 
 <header>
-	<h1><a href="/">Road Trip</a></h1>
+	<h1><a href="/">On the road</a></h1>
 	<div>
 		<strong>{session?.firstName ?? 'User'}</strong>
 		<Avatar name={fullName} src={session?.avatar} on:click={onClick} />
@@ -55,7 +55,7 @@
 		padding: 0 2rem;
 		width: 100%;
 		text-align: center;
-		background-color: #ce97b0;
+		background-color: rgba(255, 219, 235, 1);
 	}
 
 	div {

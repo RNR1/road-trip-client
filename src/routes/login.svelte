@@ -8,6 +8,7 @@
 	import { isEmpty, isValidEmail } from '$utils/validation';
 	import type { Status } from '$app/typings/common';
 	import { session } from '$app/stores';
+	import { APP_NAME } from '$config/constants';
 
 	let email = '';
 	let password = '';
@@ -41,7 +42,7 @@
 </script>
 
 <svelte:head>
-	<title>Road Trip • Sign up</title>
+	<title>{APP_NAME} • Sign up</title>
 </svelte:head>
 <Card>
 	<form on:submit|preventDefault={onSubmit}>

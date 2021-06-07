@@ -6,7 +6,7 @@
 	import Notification from '$components/Notification';
 	import { isEmpty, isValidEmail } from '$utils/validation';
 	import { goto } from '$app/navigation';
-	import { configKey } from '$config/constants';
+	import { configKey, APP_NAME } from '$config/constants';
 	import { readFile } from '$utils/string';
 
 	const SIZE_LIMIT = 1048576 * 2;
@@ -62,7 +62,7 @@
 </script>
 
 <svelte:head>
-	<title>Road Trip • Sign up</title>
+	<title>{APP_NAME} • Sign up</title>
 </svelte:head>
 <Card>
 	<form on:submit|preventDefault={onSubmit}>
