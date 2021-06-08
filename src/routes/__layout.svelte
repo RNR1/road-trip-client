@@ -1,15 +1,9 @@
 <script lang="ts" context="module">
-	import auth from '$data/auth';
+	import { authGuard } from '$lib/guards';
 	import type { Load } from '@sveltejs/kit';
-	import { browser } from '$app/env';
 
-	export const load: Load = async ({ fetch }) => {
-		try {
-			if (browser) auth.verify({ fetch });
-			return { status: 200 };
-		} catch (error) {
-			return { status: 302, redirect: '/logout' };
-		}
+	export const load: Load = async ({ page, fetch, session, context }) => {
+		return await authGuard({ page, fetch, session, context });
 	};
 </script>
 
