@@ -22,14 +22,10 @@ function createSession() {
 			session.set({});
 		},
 		verify: (context: { fetch: typeof fetch }) =>
-			Auth.verifyUser(context)
-				.then((response) => {
-					session.set({ ...response, token: localStorage.getItem(configKey) });
-					return response;
-				})
-				.catch(() => {
-					session.set({});
-				})
+			Auth.verifyUser(context).then((response) => {
+				session.set({ ...response, token: localStorage.getItem(configKey) });
+				return response;
+			})
 	};
 }
 

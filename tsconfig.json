@@ -27,7 +27,7 @@
 			"$lib/*": ["./src/lib/*"],
 			"$api/*": ["./src/api/*"],
 			"$components/*": ["./src/components/*"],
-			"$config": ["./src/config/*"],
+			"$config/*": ["./src/config/*"],
 			"$data/*": ["./src/data/*"],
 			"$utils/*": ["./src/utils/*"],
 			"$routes": ["./src/routes"],

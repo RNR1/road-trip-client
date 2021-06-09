@@ -18,18 +18,18 @@ const config = {
 		target: '#svelte',
 		vite: {
 			ssr: {
-				noExternal: Object.keys(pkg.dependencies || {})
+				external: Object.keys(pkg.dependencies || {})
 			},
 			resolve: {
 				alias: {
-					$app: `${src}`,
 					$api: `${src}/api`,
 					$components: `${src}/components`,
 					$data: `${src}/data`,
 					$config: `${src}/config`,
 					$routes: `${src}/routes`,
 					$utils: `${src}/utils`,
-					$typings: `${src}/typings`
+					$typings: `${src}/typings`,
+					$app: `${src}`
 				}
 			}
 		}

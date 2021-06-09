@@ -8,10 +8,18 @@
 </script>
 
 <script lang="ts">
+	import Loader from '$components/Loader';
 	import Header from '$components/Header';
+
+	export let loading: boolean = false;
 </script>
 
 <Header />
+
 <main>
-	<slot />
+	{#if loading}
+		<Loader />
+	{:else}
+		<slot />
+	{/if}
 </main>

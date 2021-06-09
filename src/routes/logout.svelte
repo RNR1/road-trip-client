@@ -5,9 +5,6 @@
 
 	export const load: Load = () => {
 		if (browser) auth.clear();
-		return {
-			redirect: '/',
-			status: 302
-		};
+		return { redirect: '/', status: 302 };
 	};
 </script>
