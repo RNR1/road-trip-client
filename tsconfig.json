@@ -32,7 +32,8 @@
 			"$utils/*": ["./src/utils/*"],
 			"$routes": ["./src/routes"],
 			"$typings/*": ["./src/typings/*"]
-		}
+		},
+		"types": ["google.maps"]
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
 }
