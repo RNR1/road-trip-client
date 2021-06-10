@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { GOOGLE_API_KEY } from '$config/constants';
+
 	let ready: boolean = false;
 	let container: HTMLDivElement;
 	let map: google.maps.Map;
@@ -22,7 +24,7 @@
 		defer
 		async
 		on:load={onLoad}
-		src={`https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_API_KEY}`}>
+		src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}`}>
 	</script>
 </svelte:head>
 <div bind:this={container} id="map" />
