@@ -1,8 +1,8 @@
 import client from '$api/client';
 import type { ReservationSearchOptions, Reservation } from '$typings/reservations';
-import { configKey } from '$config/constants';
 import type { AuthResponse, LoginPayload, SignupPayload } from '$typings/auth';
 import { authHeader } from './constants';
+import type { Trip } from '$typings/trips';
 
 export const Auth = {
 	login: (body: LoginPayload) =>
@@ -28,4 +28,11 @@ export const Reservations = {
 			params,
 			headers: authHeader()
 		})
+};
+
+export const Trips = {
+	list: (context: { fetch: typeof fetch }) =>
+		client.get<Trip[]>({ context, endpoint: '/trips', headers: authHeader() }),
+	trip: (context: { fetch: typeof fetch }, slug: string) =>
+		client.get<Trip>({ context, endpoint: `/trips/${slug}`, headers: authHeader() })
 };

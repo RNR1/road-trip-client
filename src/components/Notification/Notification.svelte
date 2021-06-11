@@ -5,7 +5,7 @@
 
 	export let open: boolean = true;
 	export let severity: Status | null = null;
-	export let message: string = 'Could not login with the provided credentials';
+	export let message: string = '';
 	let timeout: NodeJS.Timeout;
 
 	$: {

@@ -1,11 +1,11 @@
-export type ReservationSearchOptions = {
+declare type ReservationSearchOptions = {
 	location: string;
 	in: string;
 	out: string;
 	for: string;
 };
 
-export interface Reservation {
+declare interface Reservation {
 	title: string;
 	url: string;
 	image: string;
@@ -14,3 +14,5 @@ export interface Reservation {
 	services: string[];
 	price: string | number;
 }
+
+export type { ReservationSearchOptions, Reservation };
