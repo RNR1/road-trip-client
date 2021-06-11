@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { GOOGLE_API_KEY } from '$config/constants';
+	import { onDestroy } from 'svelte';
 
 	let ready: boolean = false;
 	let container: HTMLDivElement;
@@ -17,6 +18,10 @@
 			center
 		});
 	}
+
+	onDestroy(() => {
+		window.google = undefined;
+	});
 </script>
 
 <svelte:head>

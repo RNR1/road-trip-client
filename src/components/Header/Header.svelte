@@ -56,6 +56,7 @@
 		width: 100%;
 		text-align: center;
 		background-color: rgba(255, 219, 235, 1);
+		z-index: 1000;
 	}
 
 	div {
