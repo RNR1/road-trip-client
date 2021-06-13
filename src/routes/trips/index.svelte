@@ -13,24 +13,35 @@
 </script>
 
 <script lang="ts">
+	import Button from '$components/Button';
 	import Notification from '$components/Notification';
 	import type { Trip } from '$typings/trips';
 	import type { Status } from '$typings/common';
 	import Card from '$components/Card';
+	import { APP_NAME, PLACEHOLDER_IMAGE } from '$config/constants';
 
 	export let trips: Trip[] = [];
 	export let error: string = '';
 	export let severity: Status | null = null;
 </script>
 
+<svelte:head>
+	<title>{APP_NAME} • My trips</title>
+</svelte:head>
 <section>
-	<h2>My Trips</h2>
+	<div class="title">
+		<h2>My Trips</h2>
+		<Button href="/trips/new">Create a new trip</Button>
+	</div>
 	<ul>
 		{#each trips as { _id, name, slug, image, participants } (_id)}
 			<li>
 				<Card>
 					<a sveltekit:prefetch href={`/trips/${slug}`}>
-						<img src={image.src} alt={image.alt} />
+						<img
+							src={image.src ?? PLACEHOLDER_IMAGE.src}
+							alt={image.alt ?? PLACEHOLDER_IMAGE.alt}
+						/>
 						<div class="content">
 							<h3>{name}</h3>
 							<p>
@@ -49,6 +60,11 @@
 <Notification message={error} {severity} />
 
 <style>
+	.title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
 	ul {
 		list-style: none;
 	}
@@ -61,6 +77,9 @@
 
 	a {
 		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		height: 100%;
 		text-decoration: none;
 		color: inherit;
 	}

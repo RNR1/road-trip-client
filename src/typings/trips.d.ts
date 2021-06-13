@@ -9,4 +9,10 @@ declare interface Trip {
 	participants: AuthResponse[];
 }
 
-export type { Trip };
+declare type AddTripResponse = {
+	message: string;
+	id: string;
+	slug: string;
+};
+
+export type { Trip, AddTripResponse };

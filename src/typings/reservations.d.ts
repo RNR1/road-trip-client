@@ -15,4 +15,9 @@ declare interface Reservation {
 	price: string | number;
 }
 
-export type { ReservationSearchOptions, Reservation };
+declare interface ReservationResponse {
+	message: string;
+	results: Reservation[];
+}
+
+export type { ReservationSearchOptions, Reservation, ReservationResponse };

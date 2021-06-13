@@ -6,10 +6,8 @@
 	import Notification from '$components/Notification';
 	import { isEmpty, isValidEmail } from '$utils/validation';
 	import { goto } from '$app/navigation';
-	import { configKey, APP_NAME } from '$config/constants';
+	import { configKey, APP_NAME, IMAGE_SIZE_LIMIT } from '$config/constants';
 	import { readFile } from '$utils/string';
-
-	const SIZE_LIMIT = 1048576 * 2;
 
 	let avatar: string = '';
 	let firstName = '';
@@ -51,7 +49,7 @@
 	const onSelectFile: svelte.JSX.FormEventHandler<HTMLInputElement> = async (e) => {
 		const { files } = e.currentTarget;
 		if (!files.length) return;
-		if (files[0]?.size > SIZE_LIMIT) {
+		if (files[0]?.size > IMAGE_SIZE_LIMIT) {
 			error = 'This file is not supported, please upload a smaller file(up to 2MB).';
 			return;
 		}

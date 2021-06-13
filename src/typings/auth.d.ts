@@ -21,4 +21,6 @@ declare type AuthResponse = {
 	lastName: string;
 };
 
+declare type User = Omit<AuthResponse, 'message' | 'token'>;
+
 export type { LoginPayload, SignupPayload, AuthResponse };

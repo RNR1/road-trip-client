@@ -10,10 +10,16 @@
 <script lang="ts">
 	import Loader from '$components/Loader';
 	import Header from '$components/Header';
+	import { APP_NAME } from '$config/constants';
 
 	export let loading: boolean = false;
 </script>
 
+<svelte:head>
+	{#if loading}
+		<title>{APP_NAME} • Loading...</title>
+	{/if}
+</svelte:head>
 <Header />
 
 <main>
