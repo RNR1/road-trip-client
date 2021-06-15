@@ -31,7 +31,7 @@
 <section>
 	<div class="title">
 		<h2>My Trips</h2>
-		<Button href="/trips/new">Create a new trip</Button>
+		<Button href="/trips/new" variant="rounded">+</Button>
 	</div>
 	<ul>
 		{#each trips as { _id, name, slug, image, participants } (_id)}
@@ -60,6 +60,14 @@
 <Notification message={error} {severity} />
 
 <style>
+	section {
+		min-width: 300px;
+	}
+	@media (min-width: 800px) {
+		section {
+			min-width: 500px;
+		}
+	}
 	.title {
 		display: flex;
 		align-items: center;
@@ -95,6 +103,6 @@
 
 	img {
 		border-radius: 25px;
-		max-width: 150px;
+		max-width: 100px;
 	}
 </style>

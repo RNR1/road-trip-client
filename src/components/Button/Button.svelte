@@ -1,13 +1,13 @@
 <script lang="ts">
 	export let type: string = 'button';
 	export let href: string | null = null;
-	export let variant: 'success' | 'outline' | 'success outline' | '' = '';
+	export let variant: 'success' | 'outline' | 'success outline' | 'rounded' | '' = '';
 	export let disabled: boolean = false;
 	export let loading: boolean = false;
 </script>
 
 {#if href}
-	<a {href}><slot /></a>
+	<a {href} class={variant}><slot /></a>
 {:else}
 	<button {type} class={variant} disabled={loading || disabled} on:click>
 		{#if loading}
@@ -94,5 +94,9 @@
 	.outline.success:hover,
 	.outline.success:active {
 		background: #c2ffd1;
+	}
+
+	.rounded {
+		border-radius: 40%;
 	}
 </style>

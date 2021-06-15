@@ -1,9 +1,9 @@
 import type { LoadInput, LoadOutput } from '@sveltejs/kit/types/page';
-import { authRoutes, publicRoutes } from '$config/constants';
 import { browser } from '$app/env';
+import { goto } from '$app/navigation';
+import { authRoutes, publicRoutes } from '$config/constants';
 import type { AuthResponse } from '$typings/auth';
 import authState from '$data/auth';
-import { goto } from '$app/navigation';
 
 let auth: AuthResponse;
 authState.subscribe((session) => (auth = session as AuthResponse));
