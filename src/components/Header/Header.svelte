@@ -67,6 +67,10 @@
 		margin-right: 8px;
 	}
 
+	a {
+		height: 100%;
+	}
+
 	#brand-logo {
 		height: 100%;
 	}
