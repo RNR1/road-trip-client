@@ -31,6 +31,19 @@ export async function post<T, R extends Record<string, unknown>>({
 		method
 	}).then(handleResponse);
 }
+export async function put<T, R extends Record<string, unknown>>({
+	endpoint,
+	headers = {},
+	body,
+	method = 'PUT'
+}: HTTPClientConfig<T>): Promise<R> {
+	return fetch(`${baseURL}${endpoint}`, {
+		headers: { ...defaultHeaders, ...headers },
+		body: JSON.stringify(body),
+		method
+	}).then(handleResponse);
+}
+
 export async function patch<T, R extends Record<string, unknown>>({
 	endpoint,
 	headers = {},
@@ -56,7 +69,7 @@ export async function remove<T>({
 	}).then(handleResponse);
 }
 
-export default { get, post, patch, delete: remove };
+export default { get, post, put, patch, delete: remove };
 
 async function handleResponse(response: Response) {
 	const data = await response.json();

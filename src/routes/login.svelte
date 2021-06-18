@@ -15,7 +15,7 @@
 
 	let loading = false;
 	let message = '';
-	let severity: Status;
+	let severity: Status | null = null;
 
 	$: isEmailValid = !isEmpty(email) && isValidEmail(email);
 	$: isPasswordValid = !isEmpty(password) && password?.length > 5;
@@ -26,10 +26,9 @@
 		loading = true;
 		auth
 			.login({ email, password })
-			.then(({ message, ...user }) => {
+			.then(({ message }) => {
 				loading = false;
 				message = message;
-				$session.user = user;
 				severity = 'success';
 				goto('/');
 			})

@@ -1,4 +1,5 @@
 export const APP_NAME = 'On The Road';
+export const APP_DESCRIPTION = 'Your trip starts here';
 export const configKey = 'road-trip:token';
 export const publicRoutes = ['/', '/logout'];
 export const authRoutes = ['/login', '/signup'];

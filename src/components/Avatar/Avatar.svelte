@@ -2,13 +2,14 @@
 	import { nameInitials } from '$utils/string';
 	import { isEmpty } from '$utils/validation';
 
+	export let tabindex = 0;
 	export let name = 'User';
 	export let src = '';
 
 	$: label = !isEmpty(name) ? nameInitials(name) : '';
 </script>
 
-<figure on:click>
+<figure {tabindex} on:click on:keypress>
 	{#if src}
 		<img {src} alt={name} />
 	{:else if label?.length}

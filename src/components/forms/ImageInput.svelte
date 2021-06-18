@@ -1,14 +1,19 @@
 <script lang="ts">
 	export let src: string = '';
 	export let alt: string = '';
+	let input: HTMLInputElement | null = null;
 
-	const onClear: svelte.JSX.MouseEventHandler<HTMLDivElement> = () => {
+	const onKeyPress: svelte.JSX.KeyboardEventHandler<HTMLLabelElement> = () => {
+		input?.click();
+	};
+
+	const onClear = () => {
 		src = '';
 		alt = '';
 	};
 </script>
 
-<label for="image">
+<label role="button" tabindex={0} for="image" on:keypress={onKeyPress}>
 	{#if src}
 		<img {src} {alt} />
 	{:else}
@@ -17,8 +22,14 @@
 		</div>
 	{/if}
 	<span class="description">Upload your image (up to 2MB)</span>
-	<input hidden id="image" name="image" type="file" accept="image/*" on:change />
-	<div class="material-icons" on:click|preventDefault={onClear}>close</div>
+	<input bind:this={input} hidden id="image" name="image" type="file" accept="image/*" on:change />
+	<div
+		class="material-icons"
+		on:keypress|preventDefault|stopPropagation={onClear}
+		on:click|preventDefault={onClear}
+	>
+		close
+	</div>
 </label>
 
 <style>

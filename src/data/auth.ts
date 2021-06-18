@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { Auth } from '$api/methods';
 import { configKey } from '$config/constants';
-import type { AuthResponse, LoginPayload } from '$typings/auth';
+import type { AuthResponse, LoginPayload, SignupPayload } from '$typings/auth';
 
 function createSession() {
 	const session = writable<AuthResponse | object>({});
@@ -16,6 +16,13 @@ function createSession() {
 				session.set(user);
 				localStorage.setItem(configKey, user.token);
 				return payload;
+			}),
+		signup: (body: SignupPayload) =>
+			Auth.signup(body).then((response) => {
+				const { message, ...user } = response;
+				session.set(user);
+				localStorage.setItem(configKey, user.token);
+				return response;
 			}),
 		clear: () => {
 			localStorage.clear();

@@ -1,7 +1,7 @@
 import client from '$api/client';
 import type { ReservationSearchOptions, ReservationResponse } from '$typings/reservations';
 import type { AuthResponse, LoginPayload, SignupPayload } from '$typings/auth';
-import type { AddTripResponse, Trip } from '$typings/trips';
+import type { AddTripResponse, Participant, Trip } from '$typings/trips';
 import { authHeader } from './constants';
 
 export const Auth = {
@@ -38,7 +38,20 @@ export const Trips = {
 	add: (body: Pick<Trip, 'name' | 'image' | 'description'>) =>
 		client.post<typeof body, AddTripResponse>({
 			endpoint: '/trips',
-			method: 'POST',
+			body,
+			headers: authHeader()
+		}),
+	invitations: (context: { fetch: typeof fetch }) =>
+		client.get<Trip[]>({ context, endpoint: '/trips/invites', headers: authHeader() }),
+	invite: (body: { email: string; tripId: string }) =>
+		client.post<typeof body, { message: string }>({
+			endpoint: '/trips/invites',
+			body,
+			headers: authHeader()
+		}),
+	updateInvitation: (tripId: string, body: { action: 'join' | 'decline' }) =>
+		client.put<typeof body, { message: string }>({
+			endpoint: `/trips/invites/${tripId}`,
 			body,
 			headers: authHeader()
 		})

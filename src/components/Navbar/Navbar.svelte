@@ -24,6 +24,7 @@
 	<nav on:click>
 		{#if isAuthenticated}
 			<NavItem href="/trips" icon="map" label="My trips" />
+			<NavItem href="/trips/invitations" icon="loyalty" label="Trip invitations" />
 			<NavItem href="/book-a-room" icon="hotel" label="Book a room" />
 			<NavItem href="/logout" icon="logout" label="Logout" />
 		{:else}

@@ -1,24 +1,24 @@
-declare interface LoginPayload {
+declare type User = {
 	email: string;
-	password: string;
-}
-
-declare interface SignupPayload {
 	avatar?: string;
-	firstName: string;
-	lastName: string;
-	email: string;
-	password: string;
-}
-
-declare type AuthResponse = {
-	message: string;
-	token?: string;
-	email?: string;
-	avatar: string;
 	id: string;
 	firstName: string;
 	lastName: string;
+};
+
+declare type LoginPayload = {
+	email: string;
+	password: string;
+};
+
+declare type SignupPayload = Omit<User, 'id'> & {
+	key?: string;
+	password: string;
+};
+
+declare type AuthResponse = User & {
+	message: string;
+	token?: string;
 };
 
 declare type User = Omit<AuthResponse, 'message' | 'token'>;

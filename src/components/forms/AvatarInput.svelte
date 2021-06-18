@@ -1,18 +1,40 @@
 <script lang="ts">
 	import Avatar from '$components/Avatar';
 
+	let input: HTMLInputElement | null = null;
 	export let src: string = '';
 
-	const onClear: svelte.JSX.MouseEventHandler<HTMLDivElement> = () => {
+	const onKeyPress: svelte.JSX.KeyboardEventHandler<HTMLLabelElement> = () => {
+		input?.click();
+	};
+
+	const onClear = () => {
 		src = '';
 	};
 </script>
 
-<label for="avatar">
-	<Avatar name="" {src} />
+<label role="button" tabindex={0} for="avatar" on:keypress={onKeyPress}>
+	<Avatar tabindex={-1} name="" {src} />
 	<span>Upload your avatar (up to 2MB)</span>
-	<input hidden id="avatar" name="avatar" type="file" accept="image/*" on:change />
-	<div class="material-icons" on:click|preventDefault={onClear}>close</div>
+	<input
+		bind:this={input}
+		hidden
+		id="avatar"
+		name="avatar"
+		type="file"
+		accept="image/*"
+		placeholder="No file uploaded"
+		on:change
+	/>
+	<div
+		class="material-icons"
+		role="button"
+		tabindex={0}
+		on:keypress|preventDefault|stopPropagation={onClear}
+		on:click|preventDefault={onClear}
+	>
+		close
+	</div>
 </label>
 
 <style>

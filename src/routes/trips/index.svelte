@@ -19,6 +19,8 @@
 	import type { Status } from '$typings/common';
 	import Card from '$components/Card';
 	import { APP_NAME, PLACEHOLDER_IMAGE } from '$config/constants';
+	import TripsList from '$components/TripsList';
+	import TripItem from '$components/TripsList/TripItem.svelte';
 
 	export let trips: Trip[] = [];
 	export let error: string = '';
@@ -33,29 +35,10 @@
 		<h2>My Trips</h2>
 		<Button href="/trips/new" variant="rounded">+</Button>
 	</div>
-	<ul>
-		{#each trips as { _id, name, slug, image, participants } (_id)}
-			<li>
-				<Card>
-					<a sveltekit:prefetch href={`/trips/${slug}`}>
-						<img
-							src={image.src ?? PLACEHOLDER_IMAGE.src}
-							alt={image.alt ?? PLACEHOLDER_IMAGE.alt}
-						/>
-						<div class="content">
-							<h3>{name}</h3>
-							<p>
-								{participants.length}
-								{participants.length === 1 ? 'participant' : 'participants'}
-							</p>
-						</div>
-					</a>
-				</Card>
-			</li>
-		{:else}
-			<li>You have no trips yet!</li>
-		{/each}
-	</ul>
+	<TripsList {trips}>
+		<TripItem slot="item" let:trip {trip} />
+		<li slot="placeholder">You have no trips yet!</li>
+	</TripsList>
 </section>
 <Notification message={error} {severity} />
 
@@ -63,46 +46,26 @@
 	section {
 		min-width: 300px;
 	}
-	@media (min-width: 800px) {
-		section {
-			min-width: 500px;
-		}
-	}
+
 	.title {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
-	ul {
-		list-style: none;
-	}
 
-	ul,
-	h3 {
-		margin: 0;
-		padding: 0;
-	}
+	@media (min-width: 800px) {
+		section {
+			min-width: 500px;
+		}
 
-	a {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		height: 100%;
-		text-decoration: none;
-		color: inherit;
-	}
+		h3 {
+			font-size: 1.5rem;
+			margin-top: 1rem;
+		}
 
-	.content {
-		margin-left: 1rem;
-	}
-
-	h3 {
-		font-size: 1rem;
-		margin-top: 1rem;
-	}
-
-	img {
-		border-radius: 25px;
-		max-width: 100px;
+		img {
+			border-radius: 25px;
+			max-width: 150px;
+		}
 	}
 </style>

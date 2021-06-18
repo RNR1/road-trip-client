@@ -4,7 +4,7 @@
 	import auth from '$data/auth';
 	import Avatar from '$components/Avatar';
 	import Navbar from '$components/Navbar';
-	import { APP_NAME } from '$config/constants';
+	import Logo from '$components/Logo';
 	import type { AuthResponse } from '$typings/auth';
 
 	let open = false;
@@ -29,10 +29,10 @@
 </script>
 
 <header>
-	<a href="/"><img id="brand-logo" src="/logo_full.png" alt={APP_NAME} /></a>
+	<a href="/"><Logo /></a>
 	<div>
 		<strong>{session?.firstName ?? 'User'}</strong>
-		<Avatar name={fullName} src={session?.avatar} on:click={toggleNav} />
+		<Avatar name={fullName} src={session?.avatar} on:click={toggleNav} on:keypress={toggleNav} />
 		{#if open}
 			<Navbar on:click={toggleNav} />
 		{/if}
@@ -49,7 +49,7 @@
 		top: 0;
 		width: 100%;
 		text-align: center;
-		background-color: rgba(255, 219, 235, 1);
+		background-color: rgb(251, 231, 240);
 		z-index: 1000;
 		height: 85px;
 	}
@@ -68,10 +68,6 @@
 	}
 
 	a {
-		height: 100%;
-	}
-
-	#brand-logo {
 		height: 100%;
 	}
 

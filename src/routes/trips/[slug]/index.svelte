@@ -26,21 +26,21 @@
 	<title>{APP_NAME} • {trip?.name}</title>
 </svelte:head>
 <h2>{trip?.name ?? 'Trip Name'}</h2>
-<section>
-	<h3>participants:</h3>
-	<ParticipantsList participants={trip?.participants} />
-</section>
 <p>"{trip.description}"</p>
+<section>
+	<h3>Participants:</h3>
+	<ParticipantsList inviteLink={`/trips/${trip.slug}/invite`} participants={trip?.participants} />
+</section>
 <img src={image.src} alt={image.alt} />
 
 <style>
 	h2 {
+		font-size: 2rem;
 		width: 100%;
 		margin: 20px 60px;
 	}
 	section {
 		justify-self: flex-start;
-		margin-left: 40px;
 		width: 100%;
 	}
 	img {

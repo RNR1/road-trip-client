@@ -1,12 +1,17 @@
 import type { AuthResponse } from './auth';
 
+type Participant = Omit<AuthResponse, 'id'> & {
+	_id: string;
+};
+
 declare interface Trip {
 	_id: string;
 	name: string;
 	slug: string;
 	description: string;
 	image: { src: string; alt: string };
-	participants: AuthResponse[];
+	participants: Participant[];
+	invitees: Participant[];
 }
 
 declare type AddTripResponse = {
@@ -15,4 +20,4 @@ declare type AddTripResponse = {
 	slug: string;
 };
 
-export type { Trip, AddTripResponse };
+export type { Trip, AddTripResponse, Participant };

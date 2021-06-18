@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { Auth } from '$api/methods';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { FormControl, AvatarInput } from '$components/forms';
 	import Button from '$components/Button/Button.svelte';
 	import Card from '$components/Card';
 	import Notification from '$components/Notification';
+	import { APP_NAME, IMAGE_SIZE_LIMIT } from '$config/constants';
+	import auth from '$data/auth';
+	import type { Status } from '$typings/common';
 	import { isEmpty, isValidEmail } from '$utils/validation';
-	import { goto } from '$app/navigation';
-	import { configKey, APP_NAME, IMAGE_SIZE_LIMIT } from '$config/constants';
 	import { readFile } from '$utils/string';
 
 	let avatar: string = '';
@@ -14,9 +16,10 @@
 	let lastName = '';
 	let email = '';
 	let password = '';
-
+	let key = $page.query.get('key');
 	let loading = false;
-	let error = '';
+	let message = '';
+	let severity: Status | null = null;
 
 	$: isFirstNameValid = !isEmpty(firstName);
 	$: isLastNameValid = !isEmpty(lastName);
@@ -25,24 +28,29 @@
 	$: isFormValid = isFirstNameValid && isLastNameValid && isEmailValid && isPasswordValid;
 
 	const onSubmit: svelte.JSX.FormEventHandler<HTMLFormElement> = (e) => {
-		error = '';
+		message = '';
+		severity = null;
 		loading = true;
 		const body = {
 			firstName,
 			lastName,
 			email,
 			password,
+			key,
 			avatar: !isEmpty(avatar) ? avatar : undefined
 		};
-		Auth.signup(body)
-			.then(({ message, ...config }) => {
+		auth
+			.signup(body)
+			.then(({ message: msg }) => {
 				loading = false;
-				localStorage.setItem(configKey, JSON.stringify(config));
+				message = msg;
+				severity = 'success';
 				goto('/');
 			})
 			.catch((res: { message: string }) => {
 				loading = false;
-				error = res.message;
+				message = res.message;
+				severity = 'error';
 			});
 	};
 
@@ -50,7 +58,8 @@
 		const { files } = e.currentTarget;
 		if (!files.length) return;
 		if (files[0]?.size > IMAGE_SIZE_LIMIT) {
-			error = 'This file is not supported, please upload a smaller file(up to 2MB).';
+			message = 'This file is not supported, please upload a smaller file(up to 2MB).';
+			severity = 'error';
 			return;
 		}
 
@@ -105,7 +114,7 @@
 		<Button {loading} disabled={!isFormValid} type="submit">Sign up</Button>
 	</form>
 </Card>
-<Notification open={Boolean(error)} bind:message={error} severity="error" />
+<Notification open={Boolean(message)} bind:message bind:severity />
 
 <style>
 	form {

@@ -97,6 +97,13 @@
 	}
 
 	.rounded {
-		border-radius: 40%;
+		border-radius: 50%;
+		height: 42px;
+		width: 42px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		font-size: 1.375rem;
 	}
 </style>
