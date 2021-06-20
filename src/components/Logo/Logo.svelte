@@ -11,7 +11,7 @@
 			<img
 				id="brand-logo"
 				class={className}
-				src="/icon-black.png"
+				src="/Icon-black.png"
 				alt={`${APP_NAME} - ${APP_DESCRIPTION}`}
 			/>
 		{:else}
