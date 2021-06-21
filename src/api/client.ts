@@ -61,7 +61,7 @@ export async function remove<T>({
 	headers = {},
 	body,
 	method = 'DELETE'
-}: HTTPClientConfig<T>): Promise<void> {
+}: HTTPClientConfig<T>): Promise<T> {
 	return fetch(`${baseURL}${endpoint}`, {
 		headers: { ...defaultHeaders, ...headers },
 		body: JSON.stringify(body),

@@ -41,6 +41,14 @@ export const Trips = {
 			body,
 			headers: authHeader()
 		}),
+	edit: (slug: string, body: Pick<Trip, 'name' | 'image' | 'description'>) =>
+		client.patch<typeof body, { message: string }>({
+			endpoint: `/trips/${slug}`,
+			body,
+			headers: authHeader()
+		}),
+	delete: (id: string) =>
+		client.delete<{ message: string }>({ endpoint: `/trips/${id}`, headers: authHeader() }),
 	invitations: (context: { fetch: typeof fetch }) =>
 		client.get<Trip[]>({ context, endpoint: '/trips/invites', headers: authHeader() }),
 	invite: (body: { email: string; tripId: string }) =>
