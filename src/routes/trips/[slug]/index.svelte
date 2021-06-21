@@ -8,6 +8,7 @@
 	export const load: Load = async ({ page, fetch }) => {
 		try {
 			const trip: Trip = browser ? await Trips.trip({ fetch }, page.params.slug) : undefined;
+			if (!trip) throw { message: 'Trip not found' };
 			return { status: 200, props: { trip } };
 		} catch (err) {
 			return { status: 302, redirect: '/404' };
