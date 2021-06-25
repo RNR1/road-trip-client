@@ -10,7 +10,7 @@ declare interface HTTPClientConfig<T> {
 }
 
 declare type BasicResponse = {
-	name: string;
+	message: string;
 };
 
 export type { Method, HTTPClientConfig, BasicResponse };

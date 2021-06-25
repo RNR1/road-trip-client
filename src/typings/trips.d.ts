@@ -1,4 +1,6 @@
+import type { BasicResponse } from './api';
 import type { AuthResponse } from './auth';
+import type { Note } from './notes';
 
 type Participant = Omit<AuthResponse, 'id'> & {
 	_id: string;
@@ -12,10 +14,10 @@ declare interface Trip {
 	image: { src: string; alt: string };
 	participants: Participant[];
 	invitees: Participant[];
+	notes: Note[];
 }
 
-declare type AddTripResponse = {
-	message: string;
+declare type AddTripResponse = BasicResponse & {
 	id: string;
 	slug: string;
 };

@@ -8,6 +8,7 @@
 	import { APP_NAME, IMAGE_SIZE_LIMIT } from '$config/constants';
 	import auth from '$data/auth';
 	import type { Status } from '$typings/common';
+	import type { BasicResponse } from '$typings/api';
 	import { isEmpty, isValidEmail } from '$utils/validation';
 	import { readFile } from '$utils/string';
 
@@ -47,7 +48,7 @@
 				severity = 'success';
 				goto('/');
 			})
-			.catch((res: { message: string }) => {
+			.catch((res: BasicResponse) => {
 				loading = false;
 				message = res.message;
 				severity = 'error';

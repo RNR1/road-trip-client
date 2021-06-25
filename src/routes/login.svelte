@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import auth from '$data/auth';
 	import { FormControl } from '$components/forms';
 	import Button from '$components/Button';
 	import Card from '$components/Card';
 	import Notification from '$components/Notification';
-	import { isEmpty, isValidEmail } from '$utils/validation';
-	import type { Status } from '$app/typings/common';
-	import { session } from '$app/stores';
 	import { APP_NAME } from '$config/constants';
+	import auth from '$data/auth';
+	import type { Status } from '$typings/common';
+	import type { BasicResponse } from '$typings/api';
+	import { isEmpty, isValidEmail } from '$utils/validation';
 
 	let email = '';
 	let password = '';
@@ -32,7 +32,7 @@
 				severity = 'success';
 				goto('/');
 			})
-			.catch((err: { message: string }) => {
+			.catch((err: BasicResponse) => {
 				loading = false;
 				message = err.message;
 				severity = 'error';

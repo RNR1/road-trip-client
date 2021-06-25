@@ -1,8 +1,10 @@
 import client from '$api/client';
+import { authHeader } from '$api/constants';
 import type { ReservationSearchOptions, ReservationResponse } from '$typings/reservations';
 import type { AuthResponse, LoginPayload, SignupPayload } from '$typings/auth';
-import type { AddTripResponse, Participant, Trip } from '$typings/trips';
-import { authHeader } from './constants';
+import type { AddTripResponse, Trip } from '$typings/trips';
+import type { BasicResponse } from '$typings/api';
+import type { Note, NotePayload } from '$typings/notes';
 
 export const Auth = {
 	login: (body: LoginPayload) =>
@@ -42,25 +44,40 @@ export const Trips = {
 			headers: authHeader()
 		}),
 	edit: (slug: string, body: Pick<Trip, 'name' | 'image' | 'description'>) =>
-		client.patch<typeof body, { message: string }>({
+		client.patch<typeof body, BasicResponse>({
 			endpoint: `/trips/${slug}`,
 			body,
 			headers: authHeader()
 		}),
 	delete: (id: string) =>
-		client.delete<{ message: string }>({ endpoint: `/trips/${id}`, headers: authHeader() }),
+		client.delete<BasicResponse>({ endpoint: `/trips/${id}`, headers: authHeader() }),
 	invitations: (context: { fetch: typeof fetch }) =>
 		client.get<Trip[]>({ context, endpoint: '/trips/invites', headers: authHeader() }),
 	invite: (body: { email: string; tripId: string }) =>
-		client.post<typeof body, { message: string }>({
+		client.post<typeof body, BasicResponse>({
 			endpoint: '/trips/invites',
 			body,
 			headers: authHeader()
 		}),
 	updateInvitation: (tripId: string, body: { action: 'join' | 'decline' }) =>
-		client.put<typeof body, { message: string }>({
+		client.put<typeof body, BasicResponse>({
 			endpoint: `/trips/invites/${tripId}`,
 			body,
 			headers: authHeader()
 		})
+};
+
+export const Notes = {
+	list: (params: { trip: string }) =>
+		client.get<Note[]>({ endpoint: '/notes', params, headers: authHeader() }),
+	add: (body: NotePayload) =>
+		client.post<typeof body, BasicResponse>({ endpoint: '/notes', body, headers: authHeader() }),
+	edit: (id: string, body: NotePayload) =>
+		client.patch<typeof body, BasicResponse>({
+			endpoint: `/notes/${id}`,
+			body,
+			headers: authHeader()
+		}),
+	remove: (id: string) =>
+		client.delete<BasicResponse>({ endpoint: `/notes/${id}`, headers: authHeader() })
 };

@@ -16,3 +16,9 @@ export const readFile = (file: File) =>
 			reader.onerror = (error) => reject(error);
 		})
 	);
+
+export const summarizeText = (string: string, limit: number) => {
+	if (!string) return '';
+	if (string.length <= limit) return string;
+	return `${string.substring(0, limit)}...`;
+};
