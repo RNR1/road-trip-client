@@ -57,15 +57,5 @@
 		section {
 			min-width: 500px;
 		}
-
-		h3 {
-			font-size: 1.5rem;
-			margin-top: 1rem;
-		}
-
-		img {
-			border-radius: 25px;
-			max-width: 150px;
-		}
 	}
 </style>

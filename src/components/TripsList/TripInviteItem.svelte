@@ -47,15 +47,6 @@
 </li>
 
 <style>
-	a {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		height: 100%;
-		text-decoration: none;
-		color: inherit;
-	}
-
 	.content {
 		flex: 1.2;
 		margin-left: 1rem;

@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { GOOGLE_API_KEY } from '$config/constants';
 	import { onDestroy } from 'svelte';
+	import FormControl from '../forms/FormControl.svelte';
 
 	let ready: boolean = false;
 	let container: HTMLDivElement;
-	let map: google.maps.Map;
-	let zoom = 8;
-	let center = { lat: -34.397, lng: 150.644 };
+	export let map: google.maps.Map;
+	let zoom = 5;
+	let center = { lat: 39.809734, lng: -98.55562 };
 
 	function onLoad() {
 		ready = true;
@@ -32,7 +33,11 @@
 		src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}`}>
 	</script>
 </svelte:head>
-<div bind:this={container} id="map" />
+<section>
+	<div bind:this={container} id="map" />
+	<input type="text" placeholder="Enter your origin" />
+	<input type="text" placeholder="Enter your destination" />
+</section>
 
 <style>
 	#map {

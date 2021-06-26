@@ -28,8 +28,7 @@ const config = {
 					$config: `${src}/config`,
 					$routes: `${src}/routes`,
 					$utils: `${src}/utils`,
-					$typings: `${src}/typings`,
-					$app: `${src}`
+					$typings: `${src}/typings`
 				}
 			}
 		}
