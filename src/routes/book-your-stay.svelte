@@ -47,11 +47,11 @@
 </script>
 
 <svelte:head>
-	<title>{APP_NAME} • Book a Room</title>
+	<title>{APP_NAME} • Book your stay</title>
 </svelte:head>
 <Card>
 	<form on:submit|preventDefault={onSubmit}>
-		<h2>Book a room</h2>
+		<h2>Book your stay</h2>
 		<div>
 			<FormControl
 				label="Location"
