@@ -21,7 +21,7 @@
 <style>
 	button,
 	a {
-		transition: all;
+		transition: all 0.3s;
 		font: inherit;
 		border: 1px solid #cf0056;
 		background: #cf0056;

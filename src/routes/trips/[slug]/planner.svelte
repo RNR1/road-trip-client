@@ -3,6 +3,8 @@
 	import PlaceAutocompleteInput from '$components/forms/PlaceAutocompleteInput.svelte';
 	import { APP_NAME } from '$config/constants';
 	import { isEmpty } from '$utils/validation';
+	import { onMount } from 'svelte';
+	import Button from '$components/Button/Button.svelte';
 
 	let isFormVisible: boolean = true;
 	let disabled: boolean = false;
@@ -19,7 +21,7 @@
 	let results: google.maps.DirectionsResult | null = null;
 	let avoidTolls: boolean = false;
 
-	async function getDirection(request: Partial<google.maps.DirectionsRequest>) {
+	async function getDirection(request: Partial<google.maps.DirectionsRequest> = {}) {
 		const service = new google.maps.DirectionsService();
 		const renderer = new google.maps.DirectionsRenderer({
 			map,
@@ -36,8 +38,9 @@
 			travelMode: google.maps.TravelMode.DRIVING,
 			avoidTolls
 		});
-		console.log(results);
+
 		renderer.setDirections(results);
+		toggleForm();
 	}
 
 	const addStop = () => {
@@ -77,11 +80,15 @@
 		results?.routes[0]?.legs.reduce((prev, current) => prev + current.distance.value / 1609.344, 0)
 	);
 
-	const onSubmit = () => getDirection({});
+	const onSubmit = () => getDirection();
 
 	const isValid = () => {
 		disabled = isEmpty(origin?.value) || isEmpty(destination?.value);
 	};
+
+	onMount(() => {
+		isValid();
+	});
 </script>
 
 <svelte:head>
@@ -91,34 +98,38 @@
 	<section slot="overlay" class="overlay">
 		{#if isFormVisible}
 			<form on:input={isValid} on:submit|preventDefault={onSubmit}>
-				<PlaceAutocompleteInput placeholder="Enter your origin" bind:input={origin} bind:ready />
-				{#each waypoints as { id, input }, i (id)}
-					<div class="waypoint">
-						<PlaceAutocompleteInput bind:ready placeholder={`Stop #${i + 1}`} bind:input />
-						<button
-							disabled={i === 0}
-							type="button"
-							class="material-icons"
-							on:click={() => swapWaypoint(i, Direction.UP)}>arrow_upward</button
-						>
-						<button
-							type="button"
-							class="material-icons"
-							disabled={i === waypoints.length - 1}
-							on:click={() => swapWaypoint(i, Direction.DOWN)}>arrow_downward</button
-						>
-					</div>
-				{/each}
-				<PlaceAutocompleteInput
-					bind:ready
-					placeholder="Enter your destination"
-					bind:input={destination}
-				/>
-				<button {disabled} type="submit">Search</button>
-				<button type="button" on:click={addStop}>Add stop</button>
+				<section class="waypoints">
+					<PlaceAutocompleteInput placeholder="Enter your origin" bind:input={origin} bind:ready />
+					{#each waypoints as { id, input }, i (id)}
+						<div class="waypoint">
+							<PlaceAutocompleteInput bind:ready placeholder={`Stop #${i + 1}`} bind:input />
+							<button
+								disabled={i === 0}
+								type="button"
+								class="material-icons"
+								on:click={() => swapWaypoint(i, Direction.UP)}>arrow_upward</button
+							>
+							<button
+								type="button"
+								class="material-icons"
+								disabled={i === waypoints.length - 1}
+								on:click={() => swapWaypoint(i, Direction.DOWN)}>arrow_downward</button
+							>
+						</div>
+					{/each}
+					<PlaceAutocompleteInput
+						bind:ready
+						placeholder="Enter your destination"
+						bind:input={destination}
+					/>
+				</section>
+				<section class="actions">
+					<Button variant="success outline" {disabled} type="submit">Search</Button>
+					<Button variant="outline" type="button" on:click={addStop}>Add stop</Button>
+				</section>
 			</form>
 		{:else}
-			<button on:click={toggleForm}>Change plan</button>
+			<Button variant="outline" on:click={toggleForm}>Change plan</Button>
 		{/if}
 		{#if results}
 			<div>
@@ -135,12 +146,7 @@
 		top: 60px;
 		left: 10px;
 		padding: 1rem;
-		background: rgba(255, 255, 255, 0.6);
-	}
-
-	form {
-		display: flex;
-		flex-direction: column;
+		background: rgba(255, 255, 255, 0.7);
 	}
 
 	.waypoint,
@@ -158,5 +164,16 @@
 		background: white;
 		margin: 0;
 		cursor: pointer;
+	}
+
+	.waypoints {
+		max-height: 50vh;
+		overflow: scroll;
+		max-width: 250px;
+	}
+	.actions {
+		margin-top: 0.5rem;
+		display: flex;
+		justify-content: space-between;
 	}
 </style>
