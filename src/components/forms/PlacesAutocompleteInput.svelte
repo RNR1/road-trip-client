@@ -4,6 +4,7 @@
 	export let placeholder: string = '';
 	export let ready: boolean = false;
 	export let input: HTMLInputElement | null = null;
+	export let value: string = '';
 	let listener: google.maps.MapsEventListener | null = null;
 
 	$: if (ready && input) {
@@ -18,7 +19,7 @@
 	onDestroy(() => listener?.remove());
 </script>
 
-<input bind:this={input} type="text" {placeholder} />
+<input on:keydown bind:this={input} type="text" {placeholder} {value} />
 
 <style>
 	input {

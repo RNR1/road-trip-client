@@ -2,7 +2,7 @@ import client from '$api/client';
 import { authHeader } from '$api/constants';
 import type { ReservationSearchOptions, ReservationResponse } from '$typings/reservations';
 import type { AuthResponse, LoginPayload, SignupPayload } from '$typings/auth';
-import type { AddTripResponse, Trip } from '$typings/trips';
+import type { AddTripResponse, Trip, TripPlan } from '$typings/trips';
 import type { BasicResponse } from '$typings/api';
 import type { Note, NotePayload } from '$typings/notes';
 
@@ -20,6 +20,21 @@ export const Auth = {
 			endpoint: '/auth/verify',
 			headers: authHeader()
 		})
+};
+
+export const Notes = {
+	list: (params: { trip: string }) =>
+		client.get<Note[]>({ endpoint: '/notes', params, headers: authHeader() }),
+	add: (body: NotePayload) =>
+		client.post<typeof body, BasicResponse>({ endpoint: '/notes', body, headers: authHeader() }),
+	edit: (id: string, body: NotePayload) =>
+		client.patch<typeof body, BasicResponse>({
+			endpoint: `/notes/${id}`,
+			body,
+			headers: authHeader()
+		}),
+	remove: (id: string) =>
+		client.delete<BasicResponse>({ endpoint: `/notes/${id}`, headers: authHeader() })
 };
 
 export const Reservations = {
@@ -67,17 +82,13 @@ export const Trips = {
 		})
 };
 
-export const Notes = {
-	list: (params: { trip: string }) =>
-		client.get<Note[]>({ endpoint: '/notes', params, headers: authHeader() }),
-	add: (body: NotePayload) =>
-		client.post<typeof body, BasicResponse>({ endpoint: '/notes', body, headers: authHeader() }),
-	edit: (id: string, body: NotePayload) =>
-		client.patch<typeof body, BasicResponse>({
-			endpoint: `/notes/${id}`,
+export const TripPlans = {
+	plan: (context: { fetch: typeof fetch }, id: string) =>
+		client.get<TripPlan>({ context, endpoint: `/tripPlans/${id}`, headers: authHeader() }),
+	save: (id: string, body: TripPlan) =>
+		client.put<typeof body, BasicResponse>({
+			endpoint: `/tripPlans/${id}`,
 			body,
 			headers: authHeader()
-		}),
-	remove: (id: string) =>
-		client.delete<BasicResponse>({ endpoint: `/notes/${id}`, headers: authHeader() })
+		})
 };

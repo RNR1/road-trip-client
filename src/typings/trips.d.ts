@@ -15,6 +15,7 @@ declare interface Trip {
 	participants: Participant[];
 	invitees: Participant[];
 	notes: Note[];
+	plan: TripPlan;
 }
 
 declare type AddTripResponse = BasicResponse & {
@@ -22,4 +23,18 @@ declare type AddTripResponse = BasicResponse & {
 	slug: string;
 };
 
-export type { Trip, AddTripResponse, Participant };
+declare type Waypoint = {
+	_id: string;
+	input?: HTMLInputElement | null;
+	location: string;
+	stopover: boolean;
+};
+
+declare type TripPlan = {
+	_id?: string;
+	origin: string;
+	waypoints: Waypoint[];
+	destination: string;
+};
+
+export type { Trip, AddTripResponse, Participant, Waypoint, TripPlan };

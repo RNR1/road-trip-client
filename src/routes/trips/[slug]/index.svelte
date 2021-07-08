@@ -32,7 +32,7 @@
 	<a
 		aria-label="View this Trip track"
 		sveltekit:prefetch
-		href={`/trips/${trip.slug}/planner`}
+		href={`/trips/${trip.slug}/planner?planId=${trip.plan}`}
 		class="material-icons">map</a
 	>
 	<a

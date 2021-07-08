@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
 	import type { Load } from '@sveltejs/kit';
+	import { Trips } from '$api/methods';
 	import { browser } from '$app/env';
 	import type { Trip } from '$typings/trips';
 
@@ -16,7 +17,6 @@
 </script>
 
 <script lang="ts">
-	import { Trips } from '$api/methods';
 	import { goto } from '$app/navigation';
 	import Button from '$components/Button';
 	import Card from '$components/Card';
