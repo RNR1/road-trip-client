@@ -57,7 +57,14 @@
 		justify-content: space-between;
 		align-items: center;
 	}
+	.title .material-icons {
+		transition: all 0.3s;
+		margin: 0.2rem;
+	}
 
+	.title .material-icons:hover {
+		background: #eee;
+	}
 	@media (max-width: 500px) {
 		.title {
 			flex-direction: column;

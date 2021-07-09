@@ -23,7 +23,6 @@
 		"allowJs": true,
 		"checkJs": true,
 		"paths": {
-			"$app/*": ["./src/*"],
 			"$lib/*": ["./src/lib/*"],
 			"$api/*": ["./src/api/*"],
 			"$components/*": ["./src/components/*"],

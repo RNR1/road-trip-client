@@ -5,6 +5,7 @@
 	export let ready: boolean = false;
 	export let input: HTMLInputElement | null = null;
 	export let value: string = '';
+	export let hintId: string = '';
 	let listener: google.maps.MapsEventListener | null = null;
 
 	$: if (ready && input) {
@@ -19,7 +20,7 @@
 	onDestroy(() => listener?.remove());
 </script>
 
-<input on:keydown bind:this={input} type="text" {placeholder} {value} />
+<input aria-describedby={hintId} on:keydown bind:this={input} type="text" {placeholder} {value} />
 
 <style>
 	input {
