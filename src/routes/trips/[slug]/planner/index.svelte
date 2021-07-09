@@ -133,7 +133,7 @@
 			(leg) => leg.duration.value > maxHoursPerDay * 3600
 		);
 		if (exceededHours) {
-			message = 'Some legs of your trip requires longer driving.';
+			message = 'Some legs of your trip are longer than you might want to drive. We recommend adding more stops.';
 			severity = 'warning';
 		}
 		plan = { ...plan, maxHoursPerDay };
