@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Status } from '$app/typings/common';
 	import { onDestroy } from 'svelte';
+	import type { Status } from '$typings/common';
 	import { portal } from '$utils/portal';
 
 	export let open: boolean = true;
@@ -69,6 +69,11 @@
 
 	.info {
 		background: blue;
+		color: white;
+	}
+
+	.warning {
+		background: #ffcc00;
 		color: white;
 	}
 </style>

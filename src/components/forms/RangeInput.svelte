@@ -3,21 +3,13 @@
 
 	export let label: string;
 	export let name: string;
-	export let value: string;
-	export let type: string = 'text';
-	export let placeholder: string = '';
-	export let variant: 'input' | 'textarea' = 'input';
-	export let max: string = '';
+	export let value: number = 5;
+	export let max: number = 0;
+	export let min: number = 0;
 	export let valid: boolean = true;
 	export let errorMessage = '';
 	export let required = false;
 	let touched: boolean = false;
-
-	const onInput = (e) => {
-		e.target.type = type;
-	};
-
-	$: isTextArea = variant === 'textarea';
 
 	function setTouched() {
 		touched = true;
@@ -31,26 +23,18 @@
 			<sup>*</sup>
 		{/if}
 	</label>
-	{#if isTextArea}
-		<textarea
-			class:invalid={!valid && touched}
-			rows={3}
-			bind:value
-			{placeholder}
-			{name}
-			on:blur={setTouched}
-		/>
-	{:else}
+	<div class="input-container">
 		<input
 			class:invalid={!valid && touched}
+			type="range"
 			bind:value
 			{name}
 			{max}
-			{placeholder}
-			on:input={onInput}
+			{min}
 			on:blur={setTouched}
 		/>
-	{/if}
+		<input class="counter" readonly {value} />
+	</div>
 	<ErrorMessage>
 		{#if errorMessage && !valid && touched}
 			{errorMessage}
@@ -59,10 +43,8 @@
 </div>
 
 <style>
-	input,
-	textarea {
-		display: block;
-		width: 100%;
+	input {
+		width: 80%;
 		font: inherit;
 		border: none;
 		border-bottom: 2px solid #ccc;
@@ -72,8 +54,12 @@
 		transition: border-color 0.1s ease-out;
 	}
 
-	input:focus,
-	textarea:focus {
+	.counter {
+		margin-left: 0.5rem;
+		width: 10%;
+	}
+
+	input:focus {
 		border-color: #e40763;
 		outline: none;
 	}
@@ -87,6 +73,11 @@
 	.form-control {
 		margin: 0.5rem 0.25rem;
 		width: 100%;
+	}
+
+	.input-container {
+		display: flex;
+		align-items: center;
 	}
 
 	.invalid {

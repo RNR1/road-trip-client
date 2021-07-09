@@ -35,6 +35,7 @@ declare type TripPlan = {
 	origin: string;
 	waypoints: Waypoint[];
 	destination: string;
+	maxHoursPerDay?: number;
 };
 
 export type { Trip, AddTripResponse, Participant, Waypoint, TripPlan };

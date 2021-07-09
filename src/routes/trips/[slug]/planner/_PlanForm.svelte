@@ -5,6 +5,7 @@
 	import { PlacesAutocompleteInput } from '$components/forms';
 	import Button from '$components/Button/Button.svelte';
 	import WaypointControl from '$components/forms/WaypointControl.svelte';
+	import RangeInput from '$components/forms/RangeInput.svelte';
 
 	export let plan: TripPlan | null = null;
 	export let ready: boolean = false;
@@ -13,6 +14,7 @@
 	export let origin: HTMLInputElement | null = null;
 	export let waypoints: Waypoint[] = [...plan.waypoints];
 	export let destination: HTMLInputElement | null = null;
+	export let maxHoursPerDay: number = 5;
 
 	let disabled: boolean = false;
 
@@ -75,6 +77,13 @@
 			value={plan?.destination}
 		/>
 	</section>
+	<RangeInput
+		name="maxHoursPerDay"
+		label="Maximum driving hours per day"
+		max={15}
+		min={1}
+		bind:value={maxHoursPerDay}
+	/>
 	{#if waypoints.length}
 		<article id="waypoints-hint">* Use backspace on an empty waypoint to remove it</article>
 	{/if}

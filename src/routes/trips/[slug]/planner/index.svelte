@@ -36,6 +36,7 @@
 	let origin: HTMLInputElement | null = null;
 	let waypoints: Waypoint[] = [...plan.waypoints];
 	let destination: HTMLInputElement | null = null;
+	let maxHoursPerDay: number = 5;
 	let avoidTolls: boolean = false;
 
 	let service: google.maps.DirectionsService | null = null;
@@ -128,6 +129,15 @@
 			avoidTolls
 		});
 
+		const exceededHours = results.routes?.[0]?.legs.some(
+			(leg) => leg.duration.value > maxHoursPerDay * 3600
+		);
+		if (exceededHours) {
+			message = 'Some legs of your trip requires longer driving.';
+			severity = 'warning';
+		}
+		plan = { ...plan, maxHoursPerDay };
+
 		setMarkers();
 		renderer.setDirections(results);
 		toggleForm();
@@ -186,6 +196,7 @@
 				on:submit={onSubmit}
 				bind:isGettingDirections
 				bind:origin
+				bind:maxHoursPerDay
 				bind:destination
 				bind:waypoints
 			/>
