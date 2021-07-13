@@ -14,7 +14,7 @@
 	export let origin: HTMLInputElement | null = null;
 	export let waypoints: Waypoint[] = [...plan.waypoints];
 	export let destination: HTMLInputElement | null = null;
-	export let maxHoursPerDay: number = 5;
+	export let maxHoursPerDay: number = plan.maxHoursPerDay ?? 5;
 
 	let disabled: boolean = false;
 

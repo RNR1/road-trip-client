@@ -24,13 +24,21 @@
 			</p>
 			<div class="actions">
 				<div
+					aria-label="Edit note"
+					title="Edit note"
 					role="button"
 					class="material-icons"
 					on:click={() => dispatch('edit', { _id, title, content })}
 				>
 					edit
 				</div>
-				<div role="button" class="material-icons" on:click={() => dispatch('delete', _id)}>
+				<div
+					aria-label="Delete note"
+					title="Delete note"
+					role="button"
+					class="material-icons"
+					on:click={() => dispatch('delete', _id)}
+				>
 					delete
 				</div>
 			</div>
@@ -73,5 +81,10 @@
 	.material-icons {
 		padding: 0 0.5rem;
 		cursor: pointer;
+		transition: all 0.3s;
+	}
+
+	.material-icons:hover {
+		opacity: 0.6;
 	}
 </style>

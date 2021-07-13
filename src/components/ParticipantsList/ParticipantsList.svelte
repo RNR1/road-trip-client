@@ -16,7 +16,7 @@
 	{/each}
 	{#if inviteLink}
 		<li>
-			<a class="invite-item" href={inviteLink}>
+			<a sveltekit:prefetch class="invite-item" href={inviteLink}>
 				<Avatar name="+" />
 				<i>Invite a friend</i>
 			</a>

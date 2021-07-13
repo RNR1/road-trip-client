@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Reservation } from '$app/typings/reservations';
+	import type { Reservation } from '$typings/reservations';
 	import Card from '$components/Card';
 
 	export let reservation: Reservation;

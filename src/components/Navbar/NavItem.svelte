@@ -4,14 +4,14 @@
 	export let label: string = 'Label';
 </script>
 
-<a {href}>
+<a sveltekit:prefetch {href}>
 	<span class="material-icons">{icon}</span>
 	<span class="label">{label}</span>
 </a>
 
 <style>
 	a {
-		color: inherit;
+		color: #333 !important;
 		display: flex;
 		padding: 1rem 0.5rem;
 		align-items: center;

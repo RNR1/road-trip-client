@@ -17,8 +17,7 @@
 	import Notification from '$components/Notification';
 	import type { Trip } from '$typings/trips';
 	import type { Status } from '$typings/common';
-	import Card from '$components/Card';
-	import { APP_NAME, PLACEHOLDER_IMAGE } from '$config/constants';
+	import { APP_NAME } from '$config/constants';
 	import TripsList from '$components/TripsList';
 	import TripItem from '$components/TripsList/TripItem.svelte';
 
@@ -33,7 +32,7 @@
 <section>
 	<div class="title">
 		<h2>My Trips</h2>
-		<Button href="/trips/new" variant="rounded">+</Button>
+		<Button title="Add trip" href="/trips/new" variant="rounded">+</Button>
 	</div>
 	<TripsList {trips}>
 		<TripItem slot="item" let:trip {trip} />

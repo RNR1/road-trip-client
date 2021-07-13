@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import Backdrop from '../Backdrop/Backdrop.svelte';
 	import auth from '$data/auth';
 	import { onDestroy, onMount } from 'svelte';
@@ -20,7 +21,7 @@
 </script>
 
 <Backdrop on:click transparent />
-<div id="modal">
+<div id="modal" transition:fade={{ duration: 200 }}>
 	<nav on:click>
 		{#if isAuthenticated}
 			<NavItem href="/trips" icon="map" label="My trips" />
@@ -52,5 +53,6 @@
 		display: block;
 		width: 100%;
 		border-radius: inherit;
+		color: #ccc;
 	}
 </style>

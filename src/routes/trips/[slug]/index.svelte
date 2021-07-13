@@ -30,17 +30,32 @@
 <div class="title">
 	<h2>{trip?.name ?? 'Trip Name'}</h2>
 	<a
-		aria-label="View this Trip track"
+		aria-label="Open trip planner"
+		title="Open trip planner"
 		sveltekit:prefetch
 		href={`/trips/${trip.slug}/planner?planId=${trip.plan}`}
-		class="material-icons">map</a
+		class="material-icons"
 	>
+		map
+	</a>
 	<a
-		aria-label="Edit this trip"
+		aria-label="Open trip schedule"
+		title="Open trip schedule"
+		sveltekit:prefetch
+		href={`/trips/${trip.slug}/schedule`}
+		class="material-icons"
+	>
+		calendar_today
+	</a>
+	<a
+		aria-label="Edit your trip information"
+		title="Edit your trip information"
 		sveltekit:prefetch
 		href={`/trips/${trip.slug}/edit`}
-		class="material-icons">edit</a
+		class="material-icons"
 	>
+		edit
+	</a>
 </div>
 <img src={image.src} alt={image.alt} />
 <p>"{trip.description}"</p>

@@ -4,12 +4,13 @@
 	export let variant: 'success' | 'outline' | 'success outline' | 'rounded' | '' = '';
 	export let disabled: boolean = false;
 	export let loading: boolean = false;
+	export let title: string | null = null;
 </script>
 
 {#if href}
-	<a {href} class={variant}><slot /></a>
+	<a {title} {href} class={variant}><slot /></a>
 {:else}
-	<button {type} class={variant} disabled={loading || disabled} on:click>
+	<button {title} {type} class={variant} disabled={loading || disabled} on:click>
 		{#if loading}
 			loading...
 		{:else}
@@ -97,6 +98,8 @@
 	}
 
 	.rounded {
+		color: white !important;
+		text-decoration: none !important;
 		border-radius: 50%;
 		height: 42px;
 		width: 42px;

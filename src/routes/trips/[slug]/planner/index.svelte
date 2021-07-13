@@ -36,8 +36,9 @@
 	let origin: HTMLInputElement | null = null;
 	let waypoints: Waypoint[] = [...plan.waypoints];
 	let destination: HTMLInputElement | null = null;
-	let maxHoursPerDay: number = 5;
+	let maxHoursPerDay: number = plan.maxHoursPerDay ?? 5;
 	let avoidTolls: boolean = false;
+	let exceededHours: boolean = false;
 
 	let service: google.maps.DirectionsService | null = null;
 	let renderer: google.maps.DirectionsRenderer | null = null;
@@ -46,7 +47,10 @@
 	let listeners: google.maps.MapsEventListener[] = [];
 	let infoWindow: google.maps.InfoWindow | null = null;
 	let infoWindowContainer: HTMLDivElement | null = null;
-	let windowContent: Record<'title' | 'duration' | 'distance', string> | null = null;
+	let windowContent: Record<
+		'title' | 'duration' | 'distance' | 'exceededHours',
+		string | boolean
+	> | null = null;
 
 	let message: string = '';
 	let severity: Status | null = null;
@@ -60,7 +64,8 @@
 			windowContent = {
 				title: isEndAddress ? leg.end_address : leg.start_address,
 				duration: isEndAddress ? nextLeg?.duration.text ?? 'Destination' : leg.duration.text,
-				distance: isEndAddress ? nextLeg?.distance?.text ?? '' : leg.distance.text
+				distance: isEndAddress ? nextLeg?.distance?.text ?? '' : leg.distance.text,
+				exceededHours: leg.duration.value > maxHoursPerDay * 3600
 			};
 			const options: google.maps.InfoWindowOptions = {
 				content: infoWindowContainer,
@@ -85,12 +90,17 @@
 		const MARKER_OPTIONS = { animation: google.maps.Animation.DROP, cursor: 'pointer', map };
 		const legs = results.routes?.[0]?.legs;
 		legs?.forEach((leg, i) => {
+			const isExceededHours = leg.duration.value > maxHoursPerDay * 3600;
+
 			const startMarker =
 				(i !== legs.length - 1 || legs.length === 1) &&
 				new google.maps.Marker({
 					...MARKER_OPTIONS,
-					label: (i + 1).toString(),
-					position: leg.start_location
+					label: isExceededHours ? undefined : (i + 1).toString(),
+					position: leg.start_location,
+					icon: isExceededHours
+						? { url: 'http://maps.google.com/mapfiles/kml/pal3/icon34.png' }
+						: undefined
 				});
 			const endMarker = new google.maps.Marker({
 				...MARKER_OPTIONS,
@@ -129,11 +139,12 @@
 			avoidTolls
 		});
 
-		const exceededHours = results.routes?.[0]?.legs.some(
+		exceededHours = results.routes?.[0]?.legs.some(
 			(leg) => leg.duration.value > maxHoursPerDay * 3600
 		);
 		if (exceededHours) {
-			message = 'Some legs of your trip are longer than you might want to drive. We recommend adding more stops.';
+			message =
+				'Some legs of your trip are longer than you might want to drive. We recommend adding more stops.';
 			severity = 'warning';
 		}
 		plan = { ...plan, maxHoursPerDay };
@@ -201,8 +212,19 @@
 				bind:waypoints
 			/>
 		{:else}
-			<Button variant="outline" on:click={toggleForm}>Change plan</Button>
-			<Button loading={isSaving} variant="success" on:click={savePlan}>Save plan</Button>
+			<div>
+				<Button variant="outline" on:click={toggleForm}>Change plan</Button>
+				<Button disabled={exceededHours} loading={isSaving} variant="success" on:click={savePlan}>
+					Save plan
+				</Button>
+			</div>
+			{#if exceededHours}
+				<em>
+					Please update your maximum<br />
+					driving hours range in order<br />
+					to save this trip.
+				</em>
+			{/if}
 		{/if}
 		{#if results}
 			<div>
@@ -222,5 +244,11 @@
 		left: 10px;
 		padding: 1rem;
 		background: rgba(255, 255, 255, 0.7);
+	}
+
+	em {
+		padding: 0.5rem 0;
+		color: red;
+		max-width: 30px;
 	}
 </style>
