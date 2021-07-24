@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { TripPlan, Waypoint } from '$typings/trips';
-	import { isEmpty } from '$utils/validation';
+	import { isEmpty } from '$lib/validation';
 	import { PlacesAutocompleteInput } from '$components/forms';
 	import Button from '$components/Button/Button.svelte';
 	import WaypointControl from '$components/forms/WaypointControl.svelte';

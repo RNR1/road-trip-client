@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { nameInitials } from '$utils/string';
-	import { isEmpty } from '$utils/validation';
+	import { isEmpty } from '$lib/validation';
 
 	export let tabindex = 0;
 	export let name = 'User';

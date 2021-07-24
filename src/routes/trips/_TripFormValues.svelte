@@ -3,7 +3,7 @@
 	import { IMAGE_SIZE_LIMIT } from '$config/constants';
 	import type { Status } from '$typings/common';
 	import { readFile } from '$utils/string';
-	import { isEmpty } from '$utils/validation';
+	import { isEmpty } from '$lib/validation';
 
 	export let name: string = '';
 	export let description: string = '';

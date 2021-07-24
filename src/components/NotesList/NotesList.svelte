@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Note, NotePayload } from '$typings/notes';
-	import { isEmpty } from '$utils/validation';
+	import { isEmpty } from '$lib/validation';
 	import { summarizeText } from '$utils/string';
 	import { createEventDispatcher } from 'svelte';
 

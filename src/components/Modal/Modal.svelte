@@ -26,13 +26,13 @@
 <style>
 	.modal {
 		position: fixed;
-		top: 10vh;
+		top: 15vh;
 		left: 10%;
 		width: 80%;
 		max-height: 80vh;
 		background: white;
 		border-radius: 5px;
-		z-index: 100;
+		z-index: 1000;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 		overflow: scroll;
 	}

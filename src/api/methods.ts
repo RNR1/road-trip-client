@@ -2,7 +2,7 @@ import client from '$api/client';
 import { authHeader } from '$api/constants';
 import type { ReservationSearchOptions, ReservationResponse } from '$typings/reservations';
 import type { AuthResponse, LoginPayload, SignupPayload } from '$typings/auth';
-import type { AddTripResponse, Trip, TripPlan } from '$typings/trips';
+import type { AddTripResponse, ScheduledEvent, Trip, TripPlan, TripSchedule } from '$typings/trips';
 import type { BasicResponse } from '$typings/api';
 import type { Note, NotePayload } from '$typings/notes';
 
@@ -91,4 +91,32 @@ export const TripPlans = {
 			body,
 			headers: authHeader()
 		})
+};
+
+export const TripSchedules = {
+	schedule: (context: { fetch: typeof fetch }, id: string) =>
+		client.get<TripSchedule>({ context, endpoint: `/tripSchedules/${id}`, headers: authHeader() })
+};
+
+export const ScheduledEvents = {
+	event: (context: { fetch: typeof fetch }, id: string) =>
+		client.get<ScheduledEvent>({
+			context,
+			endpoint: `/scheduledEvents/${id}`,
+			headers: authHeader()
+		}),
+	add: (body: ScheduledEvent) =>
+		client.post<typeof body, BasicResponse & { scheduledEvent: string }>({
+			endpoint: '/scheduledEvents',
+			body,
+			headers: authHeader()
+		}),
+	edit: (id: string, body: Partial<ScheduledEvent>) =>
+		client.put<typeof body, BasicResponse>({
+			endpoint: `/scheduledEvents/${id}`,
+			body,
+			headers: authHeader()
+		}),
+	delete: (id: string) =>
+		client.delete<BasicResponse>({ endpoint: `/scheduledEvents/${id}`, headers: authHeader() })
 };

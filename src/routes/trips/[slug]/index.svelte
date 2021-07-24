@@ -17,6 +17,7 @@
 </script>
 
 <script lang="ts">
+	import FloatingIconLink from '$components/FloatingIconLink';
 	import NotesSection from '$components/NotesSection';
 	import ParticipantsList from '$components/ParticipantsList';
 
@@ -29,33 +30,23 @@
 </svelte:head>
 <div class="title">
 	<h2>{trip?.name ?? 'Trip Name'}</h2>
-	<a
-		aria-label="Open trip planner"
-		title="Open trip planner"
-		sveltekit:prefetch
-		href={`/trips/${trip.slug}/planner?planId=${trip.plan}`}
-		class="material-icons"
-	>
-		map
-	</a>
-	<a
-		aria-label="Open trip schedule"
-		title="Open trip schedule"
-		sveltekit:prefetch
-		href={`/trips/${trip.slug}/schedule`}
-		class="material-icons"
-	>
-		calendar_today
-	</a>
-	<a
-		aria-label="Edit your trip information"
-		title="Edit your trip information"
-		sveltekit:prefetch
-		href={`/trips/${trip.slug}/edit`}
-		class="material-icons"
-	>
-		edit
-	</a>
+	<div class="action-links">
+		<FloatingIconLink
+			title="Open trip planner"
+			href={`/trips/${trip.slug}/planner?planId=${trip.plan}`}
+			icon="map"
+		/>
+		<FloatingIconLink
+			title="Open trip schedule"
+			href={`/trips/${trip.slug}/schedule?scheduleId=${trip.schedule}`}
+			icon="calendar_today"
+		/>
+		<FloatingIconLink
+			title="Edit your trip information"
+			href={`/trips/${trip.slug}/edit`}
+			icon="edit"
+		/>
+	</div>
 </div>
 <img src={image.src} alt={image.alt} />
 <p>"{trip.description}"</p>
@@ -72,26 +63,30 @@
 		justify-content: space-between;
 		align-items: center;
 	}
-	.title .material-icons {
-		transition: all 0.3s;
-		margin: 0.2rem;
+
+	.title .action-links {
+		display: flex;
 	}
 
-	.title .material-icons:hover {
-		background: #eee;
+	h2 {
+		font-size: 2rem;
+		width: 100%;
+		margin: 20px 60px;
 	}
 	@media (max-width: 500px) {
 		.title {
 			flex-direction: column;
 		}
-		.material-icons {
-			align-self: flex-end;
+
+		h2 {
+			font-size: 1.5rem;
+			text-align: center;
 		}
-	}
-	h2 {
-		font-size: 2rem;
-		width: 100%;
-		margin: 20px 60px;
+
+		.title .action-links {
+			justify-content: space-evenly;
+			margin-bottom: 1rem;
+		}
 	}
 
 	h3 {
@@ -105,21 +100,5 @@
 	}
 	img {
 		border-radius: 6px;
-	}
-
-	.material-icons {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		text-decoration: none;
-		color: inherit;
-		height: 40px;
-		width: 40px;
-		padding: 1rem;
-		cursor: pointer;
-		border-radius: 50%;
-		box-shadow: 0px 10px 17.869px rgba(0, 0, 0, 0.0417275), 0px -3px 10.0172px rgba(0, 0, 0, 0.035),
-			0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
-			0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
 	}
 </style>

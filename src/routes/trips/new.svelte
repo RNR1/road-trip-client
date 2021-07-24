@@ -5,7 +5,7 @@
 	import Card from '$components/Card';
 	import { APP_NAME } from '$config/constants';
 	import type { Status } from '$typings/common';
-	import { isEmpty } from '$utils/validation';
+	import { isEmpty } from '$lib/validation';
 	import TripFormValues from './_TripFormValues.svelte';
 
 	let name: string = '';

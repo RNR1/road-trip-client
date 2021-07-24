@@ -1,10 +1,13 @@
 <script lang="ts">
+	import type { TripSchedule } from '$typings/trips';
+
 	import calendarize from 'calendarize';
 	import Arrow from './Arrow.svelte';
 
 	export let offset: number = 0;
 	export let today: Date = new Date();
 	export let selectedDay: Date | null = null;
+	export let schedule: TripSchedule | null = null;
 	let year: number = today.getFullYear();
 	let month: number = today.getMonth();
 
@@ -36,6 +39,14 @@
 			selectedDay && selected_year === year && selected_month === month && selected_day === day
 		);
 	};
+	$: hasEvents = (day: number) => {
+		const current = new Date(year, month, day);
+		return schedule?.events.some(
+			({ startDate, endDate }) =>
+				new Date(startDate).toDateString() === current.toDateString() ||
+				(current > new Date(startDate) && current < new Date(endDate))
+		);
+	};
 
 	let prev = calendarize(new Date(year, month - 1), offset);
 	let current = calendarize(new Date(year, month), offset);
@@ -63,19 +74,41 @@
 		next = calendarize(new Date(year, month + 1), offset);
 	}
 
+	function toToday() {
+		year = today.getFullYear();
+		month = today.getMonth();
+
+		prev = calendarize(new Date(year, month - 1), offset);
+		current = calendarize(new Date(year, month), offset);
+		next = calendarize(new Date(year, month + 1), offset);
+	}
+
 	function isToday(day: number) {
 		return today && today_year === year && today_month === month && today_day === day;
 	}
 
 	function selectDay(current: number) {
-		selectedDay = new Date(year, month, current);
+		const actionDate = new Date();
+		selectedDay = new Date(year, month, current, actionDate.getHours(), actionDate.getMinutes());
+	}
+
+	function selectToday() {
+		toToday();
+		selectedDay = new Date(today);
 	}
 </script>
 
 <header>
-	<Arrow left on:click={toPrev} />
 	<h4>{months[month]} {year}</h4>
-	<Arrow on:click={toNext} />
+	<div class="calendar-controller">
+		<Arrow left on:click={toPrev} on:keypress={toPrev} />
+		<button
+			class="today-button"
+			on:click={selectToday}
+			class:is-today={isToday(selectedDay.getDate())}>Today</button
+		>
+		<Arrow on:click={toNext} on:keypress={toNext} />
+	</div>
 </header>
 
 <div class="month">
@@ -88,11 +121,14 @@
 			{#each { length: 7 } as d, idxd (idxd)}
 				{#if current[idxw][idxd] != 0}
 					<span
+						tabindex="0"
 						role="button"
 						on:click={() => selectDay(current[idxw][idxd])}
+						on:keypress={() => selectDay(current[idxw][idxd])}
 						class="date"
 						class:today={isToday(current[idxw][idxd])}
 						class:selected={isSelected(current[idxw][idxd])}
+						class:has-events={hasEvents(current[idxw][idxd])}
 					>
 						{current[idxw][idxd]}
 					</span>
@@ -111,10 +147,28 @@
 		display: flex;
 		margin: 2rem auto;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-between;
 		user-select: none;
 	}
 
+	.calendar-controller {
+		display: flex;
+		align-items: center;
+	}
+
+	.calendar-controller .today-button {
+		background: transparent;
+
+		border: 1px solid #e6e4e4;
+		color: #5286fa;
+		padding: 0.25rem 1rem;
+		border-radius: 12px;
+		cursor: pointer;
+		transition: all 0.3s;
+	}
+	.calendar-controller .today-button.is-today {
+		background: #c4d9fd;
+	}
 	h4 {
 		display: block;
 		text-transform: uppercase;
@@ -180,5 +234,9 @@
 
 	.date.selected {
 		color: orange;
+	}
+
+	.date.has-events {
+		background: #eee;
 	}
 </style>

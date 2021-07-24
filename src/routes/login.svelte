@@ -8,7 +8,7 @@
 	import auth from '$data/auth';
 	import type { Status } from '$typings/common';
 	import type { BasicResponse } from '$typings/api';
-	import { isEmpty, isValidEmail } from '$utils/validation';
+	import { isEmpty, isValidEmail } from '$lib/validation';
 
 	let email = '';
 	let password = '';

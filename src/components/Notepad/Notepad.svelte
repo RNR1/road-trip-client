@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$components/Button';
 	import { FormControl } from '$components/forms';
-	import { isEmpty } from '$utils/validation';
+	import { isEmpty } from '$lib/validation';
 
 	export let title: string = '';
 	export let content: string = '';

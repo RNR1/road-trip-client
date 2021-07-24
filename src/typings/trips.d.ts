@@ -16,6 +16,7 @@ declare interface Trip {
 	invitees: Participant[];
 	notes: Note[];
 	plan: TripPlan;
+	schedule: TripSchedule;
 }
 
 declare type AddTripResponse = BasicResponse & {
@@ -38,4 +39,27 @@ declare type TripPlan = {
 	maxHoursPerDay?: number;
 };
 
-export type { Trip, AddTripResponse, Participant, Waypoint, TripPlan };
+declare type ScheduledEvent = {
+	_id?: string;
+	title: string;
+	location: string;
+	startDate: string;
+	endDate: string;
+	schedule?: TripSchedule | string;
+};
+
+declare type TripSchedule = {
+	_id: string;
+	events: ScheduledEvent[];
+	trip: Trip | string;
+};
+
+export type {
+	AddTripResponse,
+	Participant,
+	ScheduledEvent,
+	Trip,
+	TripPlan,
+	TripSchedule,
+	Waypoint
+};

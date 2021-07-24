@@ -6,7 +6,7 @@
 	import type { Status } from '$typings/common';
 	import type { NotePayload } from '$typings/notes';
 	import type { Trip } from '$typings/trips';
-	import { isEmpty } from '$utils/validation';
+	import { isEmpty } from '$lib/validation';
 
 	export let trip: Trip | null = null;
 	let noteId: string;

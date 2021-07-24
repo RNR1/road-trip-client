@@ -7,7 +7,7 @@
 	import ReservationCard from '$components/ReservationCard';
 	import type { Reservation } from '$typings/reservations';
 	import type { Status } from '$typings/common';
-	import { isEmpty } from '$utils/validation';
+	import { isEmpty } from '$lib/validation';
 	import { APP_NAME } from '$config/constants';
 
 	let location: string = '';

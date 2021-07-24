@@ -39,6 +39,7 @@
 		position: fixed;
 		margin: 0 1rem;
 		padding: 1rem;
+		z-index: 1000;
 	}
 	.open {
 		display: flex;

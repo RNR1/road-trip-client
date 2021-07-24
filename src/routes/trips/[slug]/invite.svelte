@@ -22,7 +22,7 @@
 	import { FormControl } from '$components/forms';
 	import Notification from '$components/Notification';
 	import auth from '$data/auth';
-	import { isEmpty, isValidEmail } from '$utils/validation';
+	import { isEmpty, isValidEmail } from '$lib/validation';
 	import type { AuthResponse } from '$typings/auth';
 	import type { Status } from '$typings/common';
 	import { goto } from '$app/navigation';

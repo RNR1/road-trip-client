@@ -31,6 +31,7 @@
 	}
 	img {
 		height: 100%;
+		width: auto;
 	}
 
 	@media (max-width: 500px) {

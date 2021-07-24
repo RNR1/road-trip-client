@@ -182,7 +182,6 @@
 	const savePlan = async () => {
 		try {
 			isSaving = true;
-			console.log({ plan });
 			const { message: msg } = await TripPlans.save(plan._id, plan);
 			message = msg;
 			severity = 'success';
